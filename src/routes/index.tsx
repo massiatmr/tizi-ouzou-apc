@@ -16,6 +16,10 @@ import rue from "@/assets/tizi_centre.jpg";
 import sommet from "@/assets/tizi_village.jpg";
 import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
+import pontNuit from "@/assets/pont_nuit.jpg.asset.json";
+import monumentSpirale from "@/assets/monument_spirale.jpg.asset.json";
+import stade from "@/assets/stade.jpg.asset.json";
+import statueNumide from "@/assets/statue_numide.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -51,6 +55,10 @@ const slides = [
   { src: rue, label: "Au cœur de Tizi Ouzou" },
   { src: village, label: "Tizi Ouzou et sa vallée" },
   { src: wilaya, label: "Le siège de la wilaya" },
+  { src: monumentSpirale.url, label: "Le monument des Martyrs" },
+  { src: pontNuit.url, label: "Le pont, jardins allumés" },
+  { src: stade.url, label: "Le nouveau stade de Tizi" },
+  { src: statueNumide.url, label: "La statue numide, à la nuit tombée" },
 ];
 
 /** Genêt flower — the site's signature mark */
