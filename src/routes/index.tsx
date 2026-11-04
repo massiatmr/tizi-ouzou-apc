@@ -6,7 +6,6 @@ import {
   Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube,
 } from "lucide-react";
 
-import wilaya from "@/assets/tizi_wilaya.jpg";
 import mairie from "@/assets/mairie.jpg";
 import statue from "@/assets/statue.jpg";
 import genet from "@/assets/genet.png";
