@@ -59,7 +59,7 @@ const slides = [
 function Flower({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden>
-      <g fill="currentColor"><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(0 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(72 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(144 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(216 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(288 32 32)" /><circle cx="32" cy="32" r="5" opacity=".55" /></g>
+      <g fill="currentColor"><ellipse cx="32" cy="15" rx="7" ry="12" opacity=".9" transform="rotate(0 32 32)" /><ellipse cx="32" cy="15" rx="7" ry="12" opacity=".9" transform="rotate(72 32 32)" /><ellipse cx="32" cy="15" rx="7" ry="12" opacity=".9" transform="rotate(144 32 32)" /><ellipse cx="32" cy="15" rx="7" ry="12" opacity=".9" transform="rotate(216 32 32)" /><ellipse cx="32" cy="15" rx="7" ry="12" opacity=".9" transform="rotate(288 32 32)" /><circle cx="32" cy="32" r="5" opacity=".55" /></g>
     </svg>
   );
 }
