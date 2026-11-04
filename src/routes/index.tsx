@@ -59,12 +59,7 @@ const slides = [
 function Flower({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden>
-      <g fill="currentColor">
-        <path d="M32 6c7 0 12 6 12 13 0 5-5 9-12 9s-12-4-12-9C20 12 25 6 32 6z" />
-        <path d="M14 26c5-2 12 1 15 7s1 12-4 14-12-1-15-7-1-12 4-14z" opacity=".85" />
-        <path d="M50 26c-5-2-12 1-15 7s-1 12 4 14 12-1 15-7 1-12-4-14z" opacity=".85" />
-        <path d="M32 34c4 0 7 5 7 11s-3 11-7 11-7-5-7-11 3-11 7-11z" opacity=".7" />
-      </g>
+      <g fill="currentColor"><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(0 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(72 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(144 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(216 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="14" transform="rotate(288 32 32)" /><circle cx="32" cy="32" r="5" opacity=".55" /></g>
     </svg>
   );
 }
@@ -341,7 +336,7 @@ function Index() {
               { img: sommet, t: "Le Djurdjura au couchant", s: "Montagne", c: "col-span-2 md:col-span-1" },
               { img: genet, t: "Genêts en fleurs", s: "Nature", c: "" },
               { img: rue, t: "Le centre-ville", s: "Vie urbaine", c: "" },
-              { img: village, t: "La ville dans sa vallée", s: "Panorama", c: "" },
+              { img: village, t: "La ville dans sa vallée", s: "Panorama", c: "col-span-2 md:col-span-4" },
             ].map((g, k) => <Tile key={k} {...g} delay={k * 60} />)}
           </div>
         </div>
