@@ -36,15 +36,15 @@ export const Route = createFileRoute("/")({
 type Lang = "fr" | "ar" | "kab";
 const T = {
   fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", proc: "Faire une démarche",
-    kicker: "Commune de Tizi Ouzou · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Votre commune,", title2: "plus proche de vous.", search: "Que cherchez-vous ? Acte de naissance, permis…",
+    kicker: "Commune de Tizi Ouzou · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Toute votre mairie,", title2: "ouverte 24h/24.", sub: "Démarches, signalements, suivi de dossiers : faites tout en ligne, sans file d'attente. Ensemble, construisons une Tizi Ouzou plus propre, plus verte et plus proche.", search: "Que cherchez-vous ? Acte de naissance, permis…",
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
   ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
-    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "بلديتكم،", title2: "أقرب إليكم.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
+    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "بلديتكم كاملة،", title2: "مفتوحة 24/24.", sub: "الإجراءات، البلاغات، متابعة الملفات: كل شيء عبر الإنترنت، دون طوابير. معًا نبني تيزي وزو أنظف وأكثر خضرة.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
   kab: { brand: "ⵜⴰⵖⵍⵉⵎⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴱⵔⵉⴷⵉⵏ", "ⵜⵉⵙⵓⵇⵉⵏ", "ⵉⵙⴰⵍⵏ", "ⵙⵙⵓⴼⵖ"], report: "ⵎⵎⴻⵍ ⵜⴰⵖⵓⵕⵜ", proc: "ⴳ ⵜⴰⴱⵔⵉⴷⵜ",
-    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "ⵜⴰⵖⵍⵉⵎⵜ ⵏⵏⵓⵏ,", title2: "ⵜⴻⵇⵔⴻⴱ ⵖⵓⵔⵡⴻⵏ.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
+    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "ⵜⴰⵖⵍⵉⵎⵜ ⵏⵏⵓⵏ ⴰⴽⴽ,", title2: "ⵜⴻⵍⴷⵉ 24/24.", sub: "ⵜⵉⴱⵔⵉⴷⵉⵏ, ⵜⵉⵖⵓⵕⵉⵏ, ⴰⴹⴼⴰⵕ ⵏ ⵢⵉⴼⵓⵍⴰ: ⴰⴽⴽ ⵙ ⵓⵥⴻⴹⴹⴰ.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
     quick: "ⴰⴽⵛⴰⵎ ⴰⵔⵓⵔⴰⵏ", reportT: "ⵎⵎⴻⵍ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ ⴰⵙⵓⵜⴻⵔ ⵉⵏⴻⴽ.", news: "ⵉⵙⴰⵍⵏ", demarches: "ⵜⵉⴱⵔⵉⴷⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ",
     discover: "ⴰⴷ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵙⵙⵓⴼⵖ ⵜⴰⵖⵍⵉⵎⵜ", markets: "ⵜⵉⵙⵓⵇⵉⵏ", infos: "ⵉⵙⴰⵍⵏ ⵉⵎⴻⵥⵍⴰⵢⴻⵏ" },
 };
@@ -203,7 +203,7 @@ function Index() {
           {[
             { t: "Signaler un problème", d: "Voirie, éclairage, propreté", i: AlertTriangle, img: rue, c: "md:col-span-2 md:row-span-2" },
             { t: "Mes démarches", d: "État civil, urbanisme", i: FileText, img: mairie, c: "md:col-span-2" },
-            { t: "Marchés publics", d: "Avis & cahiers des charges", i: Gavel, img: null, c: "bg-olive text-cream" },
+            { t: "Marchés publics", d: "Avis & cahiers des charges", i: Gavel, img: null, c: "bg-leaf text-night" },
             { t: "Actualités", d: "La vie de la commune", i: Newspaper, img: null, c: "bg-saffron text-night" },
             { t: "Découvrir Tizi Ouzou", d: "Patrimoine & paysages", i: Compass, img: village, c: "md:col-span-2" },
           ].map((b, k) => (
@@ -234,11 +234,11 @@ function Index() {
       </section>
 
       {/* SIGNALER */}
-      <section id="signaler" className="relative bg-olive-deep py-24 text-cream">
+      <section id="signaler" className="relative bg-night py-24 text-cream">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2">
           <div className="reveal relative">
             <div className="overflow-hidden rounded-t-[12rem] rounded-b-[2rem]">
-              <img src={rue} alt="Rue animée du centre-ville" loading="lazy" className="aspect-[4/5] w-full object-cover" />
+              <img src={genet} alt="Genêts en fleurs de Kabylie" loading="lazy" className="aspect-[4/5] w-full object-cover" />
             </div>
             <div className="absolute -bottom-8 -end-4 rounded-3xl bg-saffron p-6 text-night shadow-2xl md:-end-10">
               <div className="font-display text-5xl">2 min</div>
@@ -265,8 +265,8 @@ function Index() {
 
       {/* MARQUEE */}
       <div className="overflow-hidden border-y border-border bg-cream py-6">
-        <div className="flex w-max animate-marquee gap-12 whitespace-nowrap font-display text-4xl italic text-olive md:text-6xl">
-          {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "ⵣ", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Djurdjura", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "ⵣ" ? "text-clay not-italic" : ""}>{w}</span>))}
+        <div className="flex w-max animate-marquee gap-12 whitespace-nowrap font-display text-4xl font-bold text-night md:text-6xl">
+          {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "✿", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Djurdjura", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "ⵣ" ? "text-saffron" : ""}>{w}</span>))}
         </div>
       </div>
 
@@ -295,7 +295,7 @@ function Index() {
           </div>
           <aside className="reveal rounded-[2rem] bg-secondary p-8">
             <h3 className="font-display text-3xl">Agenda</h3>
-            <Ornament className="mt-2 h-3 w-20 text-clay" />
+            <Flower className="mt-2 h-6 w-6 text-saffron" />
             <ul className="mt-6 divide-y divide-border">
               {[["12", "NOV", "Conseil municipal ouvert au public", "Salle des délibérations"], ["18", "NOV", "Festival de la poterie", "Maison de la culture Mouloud Mammeri"], ["24", "NOV", "Marathon de Tizi Ouzou", "Départ : Stade du 1er Novembre"], ["05", "DÉC", "Journée portes ouvertes de l'état civil", "Hôtel de ville"], ["12", "JAN", "Yennayer 2977 — célébrations", "Place de l'Olivier"]].map(([d, m, tt, l]) => (
                 <li key={tt} className="group flex gap-5 py-5">
@@ -334,13 +334,14 @@ function Index() {
           </div>
           <div className="grid auto-rows-[180px] grid-cols-2 gap-4 md:auto-rows-[220px] md:grid-cols-4">
             {[
-              { img: hero, t: "Le Djurdjura", s: "Paysages", c: "col-span-2 row-span-2" },
+              { img: djurdjura, t: "Le Djurdjura", s: "Paysages", c: "col-span-2 row-span-2" },
               { img: statue, t: "Statue monumentale", s: "Monument", c: "row-span-2" },
               { img: mairie, t: "Hôtel de ville", s: "Patrimoine", c: "" },
               { img: artisanat, t: "Poterie & bijoux", s: "Artisanat", c: "row-span-2" },
-              { img: village, t: "Villages perchés", s: "Kabylie", c: "col-span-2 md:col-span-1" },
+              { img: sommet, t: "Lalla Khedidja au couchant", s: "Montagne", c: "col-span-2 md:col-span-1" },
               { img: genet, t: "Genêts en fleurs", s: "Nature", c: "" },
-              { img: rue, t: "Le centre-ville", s: "Vie urbaine", c: "col-span-2" },
+              { img: rue, t: "Le centre-ville", s: "Vie urbaine", c: "" },
+              { img: village, t: "La ville dans sa vallée", s: "Panorama", c: "" },
             ].map((g, k) => <Tile key={k} {...g} delay={k * 60} />)}
           </div>
         </div>
@@ -371,12 +372,12 @@ function Index() {
       <section className="mx-auto max-w-7xl px-5 pb-24">
         <SectionTitle kicker="Contact" title={t.infos} />
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="reveal space-y-6 rounded-[2rem] bg-olive p-8 text-cream lg:col-span-1">
-            <div><div className="flex items-center gap-2 text-saffron"><Phone className="h-4 w-4" strokeWidth={1.5} /> Numéros utiles</div>
+          <div className="reveal space-y-6 rounded-[2rem] bg-leaf p-8 text-night lg:col-span-1">
+            <div><div className="flex items-center gap-2 text-night/80 font-bold"><Phone className="h-4 w-4" strokeWidth={1.5} /> Numéros utiles</div>
               <ul className="mt-3 space-y-1 text-sm"><li>Standard APC : 026 21 XX XX</li><li>Protection civile : 14</li><li>Police : 1548</li><li>SAMU : 115</li></ul></div>
-            <div><div className="flex items-center gap-2 text-saffron"><Clock className="h-4 w-4" strokeWidth={1.5} /> Horaires</div>
+            <div><div className="flex items-center gap-2 text-night/80 font-bold"><Clock className="h-4 w-4" strokeWidth={1.5} /> Horaires</div>
               <p className="mt-3 text-sm">Dimanche – Jeudi : 8h00 – 16h30<br />Vendredi & samedi : fermé</p></div>
-            <div><div className="flex items-center gap-2 text-saffron"><MapPin className="h-4 w-4" strokeWidth={1.5} /> Adresse</div>
+            <div><div className="flex items-center gap-2 text-night/80 font-bold"><MapPin className="h-4 w-4" strokeWidth={1.5} /> Adresse</div>
               <p className="mt-3 text-sm">Hôtel de ville, Boulevard Abane Ramdane<br />15000 Tizi Ouzou, Algérie</p></div>
           </div>
           <div className="reveal overflow-hidden rounded-[2rem] border border-border lg:col-span-2">
