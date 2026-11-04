@@ -121,7 +121,7 @@ function Index() {
               <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-1.5 transition ${lang === k ? "bg-saffron text-night" : "hover:opacity-70"}`}>{l}</button>
             ))}
           </div>
-          <a href="#signaler" className="hidden items-center gap-2 rounded-full bg-clay px-5 py-3 text-sm font-bold text-cream transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
+          <a href="#signaler" className="hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
             <AlertTriangle className="h-4 w-4" strokeWidth={1.5} /> {t.report}
           </a>
           <button onClick={() => setMenu(!menu)} className={`ms-auto lg:hidden ${scrolled ? "text-night" : "text-cream"}`} aria-label="Menu">
@@ -160,7 +160,7 @@ function Index() {
               <input className="w-full bg-transparent text-base text-night outline-none placeholder:text-muted-foreground" placeholder={t.search} />
             </label>
             <div className="flex flex-wrap gap-3">
-              <a href="#signaler" className="flex items-center gap-2 rounded-full bg-clay px-6 py-4 font-bold text-cream transition hover:-translate-y-1">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a>
+              <a href="#signaler" className="flex items-center gap-2 rounded-full bg-saffron px-6 py-4 font-bold text-night shadow-[var(--shadow-glow)] transition hover:-translate-y-1">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a>
               <a href="#demarches" className="flex items-center gap-2 rounded-full border border-cream/50 px-6 py-4 font-bold text-cream backdrop-blur transition hover:bg-cream hover:text-night">{t.proc}</a>
             </div>
           </div>
@@ -341,7 +341,7 @@ function Index() {
                 <div className="mt-1 font-semibold">{tt}</div>
                 <div className="mt-1 text-sm text-muted-foreground">Date limite : {d}</div>
               </div>
-              <button className="ms-auto grid h-12 w-12 shrink-0 place-items-center rounded-full bg-night text-cream transition group-hover:bg-clay" aria-label="Télécharger"><Download className="h-5 w-5" strokeWidth={1.5} /></button>
+              <button className="ms-auto grid h-12 w-12 shrink-0 place-items-center rounded-full bg-night text-cream transition group-hover:bg-leaf" aria-label="Télécharger"><Download className="h-5 w-5" strokeWidth={1.5} /></button>
             </div>
           ))}
         </div>
