@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { usePageMotion } from "@/hooks/use-page-motion";
+import { AnimatedNumber } from "@/components/animated-number";
 import { tifinagh } from "@/lib/tifinagh";
 import { Button } from "@/components/ui/button";
 import {
   Search, AlertTriangle, FileText, Gavel, Newspaper, Compass, PackageSearch,
   ArrowRight, ArrowUpRight, Trash2, Lightbulb, Construction, ScrollText, Trees, MoreHorizontal,
-  Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube,
+  Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube, Pause, Play,
 } from "lucide-react";
 
 import mairie from "@/assets/mairie.jpg";
@@ -69,15 +71,6 @@ function Flower({ className = "" }: { className?: string }) {
   );
 }
 
-function useReveal() {
-  useEffect(() => {
-    const els = document.querySelectorAll(".reveal");
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")), { threshold: 0.15 });
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
-
 function Ornament({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 20" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
@@ -101,27 +94,26 @@ function SectionTitle({ kicker, title, light }: { kicker: string; title: string;
 function Index() {
   const [lang, setLang] = useState<Lang>("fr");
   const [slide, setSlide] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const { pageRef, scrolled, reducedMotion } = usePageMotion();
   const [menu, setMenu] = useState(false);
   const t = T[lang];
   const tr = (text: string | undefined) => text === undefined ? "" : lang === "kab" ? (tifinagh[text] ?? text) : text;
-  useReveal();
-
   useEffect(() => {
-    const id = setInterval(() => setSlide((s) => (s + 1) % slides.length), 6500);
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { clearInterval(id); window.removeEventListener("scroll", onScroll); };
-  }, []);
+    if (paused || reducedMotion) return;
+    const id = setInterval(() => {
+      if (!document.hidden) setSlide((s) => (s + 1) % slides.length);
+    }, 6500);
+    return () => clearInterval(id);
+  }, [paused, reducedMotion, slide]);
   useEffect(() => {
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = lang === "kab" ? "kab-Tfng" : lang;
   }, [lang]);
 
-  const scrolled = scrollY > 40;
-
   return (
-    <div className="overflow-x-hidden">
+    <div ref={pageRef} className="page-motion overflow-x-hidden" data-paused={paused || reducedMotion}>
+      <div className="reading-progress" aria-hidden="true" />
       {/* HEADER */}
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "bg-cream/90 shadow-[var(--shadow-soft)] backdrop-blur-xl" : "bg-transparent"}`}>
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-3 sm:flex">
@@ -140,7 +132,7 @@ function Index() {
               <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-1.5 transition ${lang === k ? "bg-saffron text-night" : "hover:opacity-70"}`}>{l}</button>
             ))}
           </div>
-          <a href="#signaler" className="hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
+          <a href="#signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
             <AlertTriangle className="h-4 w-4" strokeWidth={1.5} /> {t.report}
           </a>
           <Button variant="ghost" size="icon" onClick={() => setMenu(!menu)} className={`ms-auto shrink-0 hover:bg-cream/10 lg:hidden ${scrolled ? "text-night" : "text-cream"}`} aria-label={tr("Menu")} aria-expanded={menu}>
@@ -148,7 +140,7 @@ function Index() {
           </Button>
         </div>
         {menu && (
-          <div className="mx-4 mb-4 rounded-2xl bg-cream p-6 shadow-xl lg:hidden">
+          <div className="mobile-menu mx-4 mb-4 rounded-2xl bg-cream p-6 shadow-xl lg:hidden">
             {t.nav.map((n) => <a key={n} href="#" className="block border-b border-border py-3 font-display text-xl">{n}</a>)}
             <div className="mt-4 flex gap-2 text-sm">
               {(["fr", "ar", "kab"] as Lang[]).map((k) => <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-2 ${lang === k ? "bg-saffron" : "bg-muted"}`}>{k === "fr" ? "FR" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}</button>)}
@@ -160,7 +152,7 @@ function Index() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-night sm:h-[92svh] sm:min-h-[620px]">
         {slides.map((s, i) => (
-          <div key={i} className={`absolute inset-0 transition-opacity duration-[1800ms] ${i === slide ? "opacity-100" : "opacity-0"}`}>
+          <div key={i} aria-hidden={i !== slide} className={`hero-layer absolute inset-0 transition-opacity duration-[1800ms] ${i === slide ? "opacity-100" : "opacity-0"}`}>
             <img src={s.src} alt={tr(s.label)} key={i === slide ? `on-${slide}` : i} className={`hero-photo h-full w-full object-cover object-top sm:object-center ${i === slide ? "sm:animate-kenburns" : ""}`} width={1920} height={1088} />
           </div>
         ))}
@@ -168,9 +160,9 @@ function Index() {
 
         <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl flex-col justify-end px-5 pt-36 pb-5 sm:h-full sm:min-h-0 sm:pt-28 sm:pb-8">
           <div className="max-w-[280px] animate-rise text-[10px] font-semibold uppercase leading-relaxed text-saffron sm:max-w-none sm:text-xs">{t.kicker}</div>
-          <h1 className="mt-3 max-w-6xl font-display text-[30px] leading-[1.1] text-cream sm:mt-4 sm:text-5xl lg:text-6xl">
-            <span className="block animate-rise text-balance" style={{ animationDelay: ".15s" }}>{t.title1}</span>
-            <span className="block animate-rise text-balance text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
+          <h1 key={`${lang}-${slide}`} className="hero-heading mt-3 max-w-6xl font-display text-[30px] leading-[1.1] text-cream sm:mt-4 sm:text-5xl lg:text-6xl">
+            <span className="headline-mask"><span className="headline-line text-balance">{t.title1}</span></span>
+            <span className="headline-mask"><span className="headline-line text-balance text-saffron">{t.title2}</span></span>
           </h1>
           <p className="mt-3 max-w-xl animate-rise text-xs leading-relaxed text-cream/85 sm:mt-4 sm:text-base" style={{ animationDelay: ".4s" }}><span className="sm:hidden">{t.sub.split(". ")[0]}.</span><span className="hidden sm:inline">{t.sub}</span></p>
           <div className="mt-5 grid gap-3 animate-rise sm:mt-6 sm:gap-4 lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
@@ -179,18 +171,19 @@ function Index() {
               <input aria-label={t.search} className="min-w-0 w-full bg-transparent text-base text-night outline-none placeholder:text-muted-foreground" placeholder={t.search} />
             </label>
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
-              <Button asChild className="h-auto min-h-12 whitespace-normal rounded-full bg-saffron px-3 py-2 text-center text-xs font-bold leading-snug text-night hover:bg-saffron/90 sm:px-6 sm:py-4 sm:text-base"><a href="#signaler">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a></Button>
+              <Button asChild className="motion-cta h-auto min-h-12 whitespace-normal rounded-full bg-saffron px-3 py-2 text-center text-xs font-bold leading-snug text-night hover:bg-saffron/90 sm:px-6 sm:py-4 sm:text-base"><a href="#signaler">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a></Button>
               <Button asChild variant="outline" className="h-auto min-h-12 whitespace-normal rounded-full border-cream/50 bg-transparent px-3 py-2 text-center text-xs font-bold leading-snug text-cream backdrop-blur hover:bg-cream hover:text-night sm:px-6 sm:py-4 sm:text-base"><a href="#demarches">{t.proc}</a></Button>
             </div>
           </div>
           <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-cream/80 sm:mt-6 sm:block">
             <div className="flex min-w-0 items-center gap-3 sm:gap-4">
             {slides.map((s, i) => (
-              <Button variant="ghost" key={i} onClick={() => setSlide(i)} className="group block h-auto min-w-0 flex-1 rounded-none px-0 py-2 text-start hover:bg-transparent" aria-label={tr(s.label)} aria-pressed={i === slide}>
-                <div className="h-0.5 overflow-hidden bg-cream/25"><div className={`h-full bg-saffron transition-all ${i === slide ? "w-full duration-[6500ms] ease-linear" : "w-0 duration-0"}`} /></div>
+              <Button variant="ghost" key={i} onClick={() => setSlide(i)} className="group block h-auto min-w-0 flex-1 whitespace-normal rounded-none px-0 py-2 text-start hover:bg-transparent" aria-label={tr(s.label)} aria-pressed={i === slide}>
+                <div className="h-0.5 overflow-hidden bg-cream/25">{i === slide && <div key={slide} className="slide-progress h-full bg-saffron" />}</div>
                 <div className={`mt-2 hidden text-xs sm:block ${i === slide ? "text-cream" : "opacity-60"}`}>0{i + 1} — {tr(s.label)}</div>
               </Button>
             ))}
+            <Button variant="ghost" size="icon" onClick={() => setPaused(!paused)} className="shrink-0 text-cream hover:bg-cream/10 hover:text-cream" aria-label={lang === "kab" ? (paused ? "ⴽⴻⵎⵎⴻⵍ" : "ⵙⴱⴻⴷⴷ") : lang === "ar" ? (paused ? "تشغيل" : "إيقاف مؤقت") : paused ? "Reprendre le diaporama" : "Mettre le diaporama en pause"} aria-pressed={paused} title={lang === "fr" ? (paused ? "Reprendre le diaporama" : "Mettre le diaporama en pause") : undefined}>{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}</Button>
             </div>
             <span className="shrink-0 text-[10px] tabular-nums sm:hidden">0{slide + 1} / 0{slides.length}</span>
           </div>
@@ -209,7 +202,7 @@ function Index() {
             { t: "Actualités", d: "La vie de la commune", i: Newspaper, img: null, c: "bg-saffron text-night" },
             { t: "Découvrir Tizi Ouzou", d: "Patrimoine & paysages", i: Compass, img: village, c: "md:col-span-2" },
           ].map((b, k) => (
-            <a key={k} href="#" className={`reveal group relative overflow-hidden rounded-[1.75rem] p-6 ${b.c} ${b.img ? "text-cream" : ""}`} style={{ transitionDelay: `${k * 80}ms` }}>
+            <a key={k} href="#" className={`reveal motion-card group relative overflow-hidden rounded-[1.75rem] p-6 ${b.c} ${b.img ? "text-cream" : ""}`} style={{ transitionDelay: `${k * 80}ms` }}>
               {b.img && <><img src={b.img} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-[1.2s] group-hover:scale-110" /><div className="absolute inset-0 bg-gradient-to-t from-night/90 to-night/10" /></>}
               <div className="relative flex h-full flex-col justify-between">
                 <b.i className="h-8 w-8" strokeWidth={1.25} />
@@ -243,7 +236,7 @@ function Index() {
               <img src={genet} alt={tr("Genêts en fleurs de Kabylie")} loading="lazy" className="aspect-[4/5] w-full object-cover" />
             </div>
             <div className="absolute -bottom-8 -end-4 rounded-3xl bg-saffron p-6 text-night shadow-2xl md:-end-10">
-              <div className="font-display text-5xl">{tr("2 min")}</div>
+              <div className="font-display text-5xl"><AnimatedNumber value={2} label={tr("2 min")} reducedMotion={reducedMotion} /></div>
               <div className="text-sm font-semibold">{tr("pour signaler")}</div>
             </div>
           </div>
@@ -266,7 +259,7 @@ function Index() {
       </section>
 
       {/* MARQUEE */}
-      <div className="overflow-hidden border-y border-border bg-cream py-6">
+      <div className="motion-marquee overflow-hidden border-y border-border bg-cream py-6">
         <div className="flex w-max animate-marquee gap-12 whitespace-nowrap font-display text-4xl font-bold text-night md:text-6xl">
           {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "✿", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Djurdjura", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "✿" ? "self-center text-lg text-saffron" : w === "ⵣ" ? "text-saffron" : ""}>{tr(w)}</span>))}
         </div>
@@ -300,7 +293,7 @@ function Index() {
             <Flower className="mt-2 h-3 w-3 text-saffron" />
             <ul className="mt-6 divide-y divide-border">
               {[["12", "NOV", "Conseil municipal ouvert au public", "Salle des délibérations"], ["18", "NOV", "Festival de la poterie", "Maison de la culture Mouloud Mammeri"], ["24", "NOV", "Marathon de Tizi Ouzou", "Départ : Stade du 1er Novembre"], ["05", "DÉC", "Journée portes ouvertes de l'état civil", "Hôtel de ville"], ["12", "JAN", "Yennayer 2977 — célébrations", "Place de l'Olivier"]].map(([d, m, tt, l]) => (
-                <li key={tt} className="group flex gap-5 py-5">
+                <li key={tt} className="reveal agenda-item group flex gap-5 py-5">
                   <div className="w-14 shrink-0 text-center"><div className="font-display text-4xl leading-none text-clay transition group-hover:text-olive">{d}</div><div className="text-xs font-bold tracking-widest">{tr(m)}</div></div>
                   <div><div className="font-semibold">{tr(tt)}</div><div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground"><MapPin className="h-3.5 w-3.5" strokeWidth={1.5} />{tr(l)}</div></div>
                 </li>
@@ -395,7 +388,7 @@ function Index() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-3"><img src={blason} alt="" className="h-14 w-auto" loading="lazy" /><div className="font-display text-2xl">{t.brand}</div></div>
             <p className="mt-4 max-w-sm text-sm text-cream/70">{tr("Assemblée Populaire Communale de Tizi Ouzou — au service des citoyennes et citoyens.")}</p>
-            <div className="mt-6 flex gap-3">{[Facebook, Instagram, Youtube].map((I, k) => <a key={k} href="#" className="grid h-11 w-11 place-items-center rounded-full border border-cream/20 transition hover:bg-saffron hover:text-night"><I className="h-4 w-4" strokeWidth={1.5} /></a>)}</div>
+            <div className="mt-6 flex gap-3">{[Facebook, Instagram, Youtube].map((I, k) => <a key={k} href="#" className="social-link grid h-11 w-11 place-items-center rounded-full border border-cream/20 transition hover:bg-saffron hover:text-night"><I className="h-4 w-4" strokeWidth={1.5} /></a>)}</div>
           </div>
           <div><div className="font-semibold text-saffron">{tr("Liens")}</div><ul className="mt-3 space-y-2 text-sm text-cream/80">{t.nav.map((n) => <li key={n}><a href="#" className="hover:text-saffron">{n}</a></li>)}</ul></div>
           <div><div className="font-semibold text-saffron">{tr("Langue")}</div>
@@ -410,19 +403,11 @@ function Index() {
 }
 
 function Tile({ img, t, s, c, delay }: { img: string; t: string; s: string; c: string; delay: number }) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const onMove = (e: React.MouseEvent) => {
-    const el = ref.current; if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
-  };
   return (
-    <a ref={ref} href="#" onMouseMove={onMove} onMouseLeave={() => ref.current && (ref.current.style.transform = "")}
-      className={`reveal group relative overflow-hidden rounded-[1.5rem] transition-transform duration-300 ${c}`} style={{ transitionDelay: `${delay}ms` }}>
+    <a href="#" className={`reveal motion-card gallery-tile group relative overflow-hidden rounded-[1.5rem] transition-transform duration-300 ${c}`} style={{ transitionDelay: `${delay}ms` }}>
       <img src={img} alt={t} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-[1.2s] group-hover:scale-110" />
       <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-transparent to-transparent opacity-80 transition group-hover:opacity-100" />
-      <div className="absolute bottom-0 p-5">
+      <div className="gallery-caption absolute bottom-0 p-5">
         <div className="text-[11px] font-bold uppercase tracking-[0.25em] text-saffron">{s}</div>
         <div className="font-display text-xl md:text-2xl">{t}</div>
       </div>

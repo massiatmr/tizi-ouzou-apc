@@ -11,3 +11,4 @@
 
 - Keep homepage display and body typography in the global font tokens, and load their web fonts in the root head so all sections share the same identity.
 - Keep supplemental homepage Tifinagh copy in a browser-safe dictionary and resolve it from the selected language, including accessible labels, so all sections switch together.
+- Keep page motion in a browser-only hook with frame-coalesced scroll/pointer updates and CSS variables; respect reduced motion and fine-pointer capabilities to preserve accessibility and mobile performance.
