@@ -132,13 +132,84 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
-@layer base {
-  * {
-    border-color: var(--color-border);
-  }
+/* ===== Tizi Ouzou design system ===== */
+:root {
+  --cream: oklch(0.965 0.02 85);
+  --night: oklch(0.24 0.045 255);
+  --olive: oklch(0.42 0.08 125);
+  --olive-deep: oklch(0.3 0.06 125);
+  --saffron: oklch(0.8 0.16 80);
+  --clay: oklch(0.56 0.15 38);
+  --background: var(--cream);
+  --foreground: var(--night);
+  --card: oklch(0.985 0.012 85);
+  --card-foreground: var(--night);
+  --primary: var(--olive);
+  --primary-foreground: var(--cream);
+  --secondary: oklch(0.92 0.035 85);
+  --secondary-foreground: var(--night);
+  --muted: oklch(0.93 0.025 85);
+  --muted-foreground: oklch(0.45 0.03 255);
+  --accent: var(--saffron);
+  --accent-foreground: var(--night);
+  --border: oklch(0.86 0.03 80);
+  --ring: var(--saffron);
+  --radius: 1rem;
+  --shadow-soft: 0 30px 60px -30px oklch(0.24 0.045 255 / 0.35);
+}
 
+@theme inline {
+  --color-cream: var(--cream);
+  --color-night: var(--night);
+  --color-olive: var(--olive);
+  --color-olive-deep: var(--olive-deep);
+  --color-saffron: var(--saffron);
+  --color-clay: var(--clay);
+  --font-display: "Fraunces", "Noto Kufi Arabic", "Noto Sans Tifinagh", serif;
+  --font-sans: "Manrope", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
+}
+
+@utility kabyle-band {
+  height: 14px;
+  background-color: var(--clay);
+  background-image:
+    linear-gradient(135deg, var(--saffron) 25%, transparent 25%),
+    linear-gradient(225deg, var(--saffron) 25%, transparent 25%),
+    linear-gradient(45deg, var(--night) 25%, transparent 25%),
+    linear-gradient(315deg, var(--night) 25%, transparent 25%);
+  background-size: 28px 28px;
+  background-position: 14px 0, 14px 0, 0 0, 0 0;
+}
+
+@utility kabyle-dots {
+  background-image: radial-gradient(var(--clay) 1.5px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1);
+  &.in { opacity: 1; transform: none; }
+}
+
+@keyframes kenburns { from { transform: scale(1.15); } to { transform: scale(1); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes rise { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+@utility animate-kenburns { animation: kenburns 9s ease-out both; }
+@utility animate-marquee { animation: marquee 40s linear infinite; }
+@utility animate-rise { animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; }
+@utility animate-spin-slow { animation: spin-slow 40s linear infinite; }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
   }
+  [dir="rtl"] body, [dir="rtl"] { font-family: "Noto Kufi Arabic", sans-serif; }
 }
