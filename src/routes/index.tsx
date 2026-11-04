@@ -6,7 +6,6 @@ import {
   Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube,
 } from "lucide-react";
 
-import wilaya from "@/assets/tizi_wilaya.jpg";
 import mairie from "@/assets/mairie.jpg";
 import statue from "@/assets/statue.jpg";
 import genet from "@/assets/genet.png";
@@ -53,8 +52,6 @@ const T = {
 
 const slides = [
   { src: rue, label: "Au cœur de Tizi Ouzou" },
-  { src: village, label: "Tizi Ouzou et sa vallée" },
-  { src: wilaya, label: "Le siège de la wilaya" },
   { src: monumentSpirale.url, label: "Le monument des Martyrs" },
   { src: pontNuit.url, label: "Le pont, jardins allumés" },
   { src: stade.url, label: "Le nouveau stade de Tizi" },
