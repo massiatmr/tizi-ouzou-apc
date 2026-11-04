@@ -18,7 +18,7 @@ import blason from "@/assets/blason.png";
 import pontNuit from "@/assets/pont_nuit.jpg.asset.json";
 import monumentSpirale from "@/assets/monument_spirale.jpg.asset.json";
 import stade from "@/assets/stade.jpg.asset.json";
-import statueNumide from "@/assets/statue_numide.jpg.asset.json";
+import statueNumide from "@/assets/statue_numide_nuit.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
