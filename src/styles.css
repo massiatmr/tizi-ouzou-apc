@@ -252,11 +252,25 @@
 }
 .gallery-caption { transition: transform .55s cubic-bezier(.16,1,.3,1); }
 .motion-cta { position: relative; transition: transform .3s ease, box-shadow .3s ease; }
+.motion-cta::after {
+  content: ""; position: absolute; inset: 0; border: 1px solid var(--saffron);
+  border-radius: inherit; pointer-events: none; animation: action-pulse 7s ease-out infinite;
+}
+@keyframes action-pulse {
+  0%, 65%, 100% { opacity: 0; transform: scale(1); }
+  72% { opacity: .45; transform: scale(1); }
+  92% { opacity: 0; transform: scale(1.08, 1.25); }
+}
 .motion-cta svg { transition: translate .3s ease; }
 .motion-cta:hover svg { translate: 4px 0; }
 [dir="rtl"] .motion-cta:hover svg { translate: -4px 0; }
 .motion-cta:focus-visible { outline: 2px solid var(--saffron); outline-offset: 5px; }
 .motion-marquee:hover .animate-marquee { animation-play-state: paused; }
+[data-paused="true"] .animate-marquee, [data-paused="true"] .motion-cta::after { animation-play-state: paused; }
+.agenda-item:nth-child(2) { transition-delay: 60ms; }
+.agenda-item:nth-child(3) { transition-delay: 120ms; }
+.agenda-item:nth-child(4) { transition-delay: 180ms; }
+.agenda-item:nth-child(5) { transition-delay: 240ms; }
 .agenda-item { transition: opacity .85s ease, transform .85s ease, background-color .3s ease; }
 .agenda-item:hover { background-color: color-mix(in oklab, var(--saffron) 10%, transparent); }
 .social-link:hover { transform: translateY(-4px) rotate(-6deg); }
