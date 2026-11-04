@@ -42,11 +42,11 @@ const T = {
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
   ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
-    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "تيزي وزو في الحركة :", title2: "حيث تلتقي تقاليدنا بمستقبلنا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
+    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "نبني، نحافظ ونشارك :", title2: "الوجه الجديد لبلديتنا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
   kab: { brand: "ⵜⴰⵖⵍⵉⵎⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴱⵔⵉⴷⵉⵏ", "ⵜⵉⵙⵓⵇⵉⵏ", "ⵉⵙⴰⵍⵏ", "ⵙⵙⵓⴼⵖ"], report: "ⵎⵎⴻⵍ ⵜⴰⵖⵓⵕⵜ", proc: "ⴳ ⵜⴰⴱⵔⵉⴷⵜ",
-    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "Tizi Wezzu tettḥerrek :", title2: "anda ttfaqan leqdan akked azekka.", sub: "Tamdint yettḥaraben ɣef uẓar-is, tettwali ɣer uzekka.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
+    kicker: "ⵜⴰⵖⵍⵉⵎⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "ⵙⴱⴻⴷ, ⵃⵔⴻⵣ, ⴱⴹⵓ :", title2: "ⵓⴷⴻⵎ ⴰⵎⴰⵢⵏⵓ ⵏ ⵜⴰⵖⵍⵉⵎⵜ-ⵏⵏⴻⵖ.", sub: "ⵜⴰⵎⴷⵉⵏⵜ ⵢⴻⵜⵜⵃⴰⵔⴰⴱⴻⵏ ⵖⴻⴼ ⵓⵣⴰⵔ-ⵉⵙ, ⵜⴻⵜⵜⵡⴰⵍⵉ ⵖⴻⵔ ⵓⵣⴻⴽⴽⴰ.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
     quick: "ⴰⴽⵛⴰⵎ ⴰⵔⵓⵔⴰⵏ", reportT: "ⵎⵎⴻⵍ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ ⴰⵙⵓⵜⴻⵔ ⵉⵏⴻⴽ.", news: "ⵉⵙⴰⵍⵏ", demarches: "ⵜⵉⴱⵔⵉⴷⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ",
     discover: "ⴰⴷ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵙⵙⵓⴼⵖ ⵜⴰⵖⵍⵉⵎⵜ", markets: "ⵜⵉⵙⵓⵇⵉⵏ", infos: "ⵉⵙⴰⵍⵏ ⵉⵎⴻⵥⵍⴰⵢⴻⵏ" },
 };
