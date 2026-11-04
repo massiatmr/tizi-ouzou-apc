@@ -53,7 +53,6 @@ const T = {
 
 const slides = [
   { src: rue, label: "Au cœur de Tizi Ouzou" },
-  { src: wilaya, label: "Le siège de la wilaya" },
   { src: monumentSpirale.url, label: "Le monument des Martyrs" },
   { src: pontNuit.url, label: "Le pont, jardins allumés" },
   { src: stade.url, label: "Le nouveau stade de Tizi" },
