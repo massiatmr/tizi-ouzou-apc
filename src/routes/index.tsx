@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
       { title: "APC de Tizi Ouzou — Site officiel de la commune" },
       { name: "description", content: "Démarches, signalements, actualités, marchés publics et découverte de Tizi Ouzou : le portail officiel de l'APC." },
       { property: "og:title", content: "APC de Tizi Ouzou — Site officiel" },
-      { property: "og:description", content: "Tizi Ouzou. L’avenir en commun. Une ville qui préserve son identité et construit son avenir avec ses citoyens." },
+      { property: "og:description", content: "Tizi Ouzou en mouvement : là où nos traditions rencontrent notre futur. Une commune qui préserve son identité et construit son avenir avec ses citoyens." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -37,15 +37,15 @@ export const Route = createFileRoute("/")({
 type Lang = "fr" | "ar" | "kab";
 const T = {
   fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", proc: "Faire une démarche",
-    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Tizi Ouzou.", title2: "L’avenir en commun.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
+    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Tizi Ouzou en mouvement :", title2: "là où nos traditions rencontrent notre futur.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
   ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
-    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "تيزي وزو.", title2: "مستقبل نبنيه معًا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
+    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "تيزي وزو في الحركة :", title2: "حيث تلتقي تقاليدنا بمستقبلنا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
   kab: { brand: "ⵜⴰⵖⵍⵉⵎⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴱⵔⵉⴷⵉⵏ", "ⵜⵉⵙⵓⵇⵉⵏ", "ⵉⵙⴰⵍⵏ", "ⵙⵙⵓⴼⵖ"], report: "ⵎⵎⴻⵍ ⵜⴰⵖⵓⵕⵜ", proc: "ⴳ ⵜⴰⴱⵔⵉⴷⵜ",
-    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "Tizi Wezzu.", title2: "Azakka, s yiwen wul.", sub: "Tamdint yettḥaraben ɣef uẓar-is, tettwali ɣer uzekka.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
+    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "Tizi Wezzu tettḥerrek :", title2: "anda ttfaqan leqdan akked azekka.", sub: "Tamdint yettḥaraben ɣef uẓar-is, tettwali ɣer uzekka.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
     quick: "ⴰⴽⵛⴰⵎ ⴰⵔⵓⵔⴰⵏ", reportT: "ⵎⵎⴻⵍ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ ⴰⵙⵓⵜⴻⵔ ⵉⵏⴻⴽ.", news: "ⵉⵙⴰⵍⵏ", demarches: "ⵜⵉⴱⵔⵉⴷⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ",
     discover: "ⴰⴷ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵙⵙⵓⴼⵖ ⵜⴰⵖⵍⵉⵎⵜ", markets: "ⵜⵉⵙⵓⵇⵉⵏ", infos: "ⵉⵙⴰⵍⵏ ⵉⵎⴻⵥⵍⴰⵢⴻⵏ" },
 };
@@ -165,11 +165,11 @@ function Index() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pt-28 pb-8">
           <div className="animate-rise text-xs font-semibold uppercase text-saffron">{t.kicker}</div>
-          <h1 className="mt-4 max-w-6xl font-display text-5xl leading-[1.04] text-cream sm:text-7xl lg:text-8xl">
+          <h1 className="mt-4 max-w-6xl font-display text-4xl leading-[1.08] text-cream sm:text-6xl lg:text-7xl">
             <span className="block animate-rise" style={{ animationDelay: ".15s" }}>{t.title1}</span>
             <span className="block animate-rise text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
           </h1>
-          <p className="mt-5 max-w-xl animate-rise text-base leading-relaxed text-cream/85" style={{ animationDelay: ".4s" }}>{t.sub}</p>
+          <p className="mt-4 max-w-xl animate-rise text-sm leading-relaxed text-cream/85 sm:text-base" style={{ animationDelay: ".4s" }}>{t.sub}</p>
           <div className="mt-6 grid gap-4 animate-rise lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
             <label className="flex items-center gap-3 rounded-full bg-cream/95 px-6 py-4 shadow-2xl backdrop-blur focus-within:ring-4 focus-within:ring-saffron/50">
               <Search className="h-5 w-5 text-olive" strokeWidth={1.5} />
