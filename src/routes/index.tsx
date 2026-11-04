@@ -280,9 +280,9 @@ function Index() {
             <article className="reveal group relative overflow-hidden rounded-[2rem]">
               <img src={mairie} alt={tr("Hôtel de ville illuminé")} loading="lazy" className="aspect-[16/9] w-full object-cover transition duration-[1.5s] group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-night via-night/30 to-transparent" />
-              <div className="absolute bottom-0 p-8 text-cream">
+              <div className="relative bg-night p-5 text-cream sm:absolute sm:bottom-0 sm:bg-transparent sm:p-8">
                 <span className="rounded-full bg-saffron px-3 py-1 text-xs font-bold text-night">{tr("À la une · 2 nov. 2026")}</span>
-                <h3 className="mt-4 max-w-2xl font-display text-3xl md:text-5xl">{tr("L'Hôtel de ville s'illumine : la façade historique entièrement restaurée")}</h3>
+                <h3 className="mt-4 max-w-2xl font-display text-2xl sm:text-3xl md:text-5xl">{tr("L'Hôtel de ville s'illumine : la façade historique entièrement restaurée")}</h3>
               </div>
             </article>
             <div className="grid gap-6 sm:grid-cols-2">
@@ -316,10 +316,10 @@ function Index() {
           <SectionTitle kicker={t.proc} title={t.demarches} />
           <div className="grid border-t border-night/15 md:grid-cols-2">
             {["Extrait d'acte de naissance (S12)", "Certificat de résidence", "Fiche familiale d'état civil", "Légalisation de signature", "Permis de construire", "Inscription sur les listes électorales"].map((d, k) => (
-              <a key={d} href="#" className="reveal group flex items-center gap-4 flex-wrap border-b border-night/15 py-7 md:odd:pe-10 md:even:ps-10 md:even:border-s">
+              <a key={d} href="#" className="reveal group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 border-b border-night/15 py-7 md:odd:pe-10 md:even:ps-10 md:even:border-s">
                 <span className="font-display text-xl text-clay">0{k + 1}</span>
                 <span className="min-w-0 flex-1 font-display text-2xl transition group-hover:translate-x-2 rtl:group-hover:-translate-x-2">{tr(d)}</span>
-                <span className="ms-auto flex shrink-0 items-center gap-2 text-sm font-bold text-olive">{tr("Voir les étapes")} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1 rtl:rotate-180" /></span>
+                <span className="col-start-2 flex items-center gap-2 text-sm font-bold text-olive">{tr("Voir les étapes")} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1 rtl:rotate-180" /></span>
               </a>
             ))}
           </div>
