@@ -6,16 +6,14 @@ import {
   Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube,
 } from "lucide-react";
 
-import hero from "@/assets/tizi_belloua.jpg";
+import wilaya from "@/assets/tizi_wilaya.jpg";
 import mairie from "@/assets/mairie.jpg";
 import statue from "@/assets/statue.jpg";
 import genet from "@/assets/genet.png";
 import village from "@/assets/tizi_vue.jpg";
 import artisanat from "@/assets/artisanat.jpg";
 import rue from "@/assets/tizi_centre.jpg";
-import tilesdit from "@/assets/tizi_tilesdit.jpg";
 import sommet from "@/assets/tizi_village.jpg";
-import nuit from "@/assets/tizi_nuit.jpg";
 import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
 
@@ -25,7 +23,7 @@ export const Route = createFileRoute("/")({
       { title: "APC de Tizi Ouzou — Site officiel de la commune" },
       { name: "description", content: "Démarches, signalements, actualités, marchés publics et découverte de Tizi Ouzou : le portail officiel de l'APC." },
       { property: "og:title", content: "APC de Tizi Ouzou — Site officiel" },
-      { property: "og:description", content: "Votre commune, plus proche de vous. Démarches, signalements et découverte de Tizi Ouzou." },
+      { property: "og:description", content: "Tizi Ouzou. L’avenir en commun. Une ville qui préserve son identité et construit son avenir avec ses citoyens." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -36,23 +34,23 @@ export const Route = createFileRoute("/")({
 type Lang = "fr" | "ar" | "kab";
 const T = {
   fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", proc: "Faire une démarche",
-    kicker: "Commune de Tizi Ouzou · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Toute votre mairie,", title2: "ouverte 24h/24.", sub: "Démarches, signalements, suivi de dossiers : faites tout en ligne, sans file d'attente. Ensemble, construisons une Tizi Ouzou plus propre, plus verte et plus proche.", search: "Que cherchez-vous ? Acte de naissance, permis…",
+    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Tizi Ouzou.", title2: "L’avenir en commun.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
   ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
-    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "بلديتكم كاملة،", title2: "مفتوحة 24/24.", sub: "الإجراءات، البلاغات، متابعة الملفات: كل شيء عبر الإنترنت، دون طوابير. معًا نبني تيزي وزو أنظف وأكثر خضرة.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
+    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "تيزي وزو.", title2: "مستقبل نبنيه معًا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
   kab: { brand: "ⵜⴰⵖⵍⵉⵎⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴱⵔⵉⴷⵉⵏ", "ⵜⵉⵙⵓⵇⵉⵏ", "ⵉⵙⴰⵍⵏ", "ⵙⵙⵓⴼⵖ"], report: "ⵎⵎⴻⵍ ⵜⴰⵖⵓⵕⵜ", proc: "ⴳ ⵜⴰⴱⵔⵉⴷⵜ",
-    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "ⵜⴰⵖⵍⵉⵎⵜ ⵏⵏⵓⵏ ⴰⴽⴽ,", title2: "ⵜⴻⵍⴷⵉ 24/24.", sub: "ⵜⵉⴱⵔⵉⴷⵉⵏ, ⵜⵉⵖⵓⵕⵉⵏ, ⴰⴹⴼⴰⵕ ⵏ ⵢⵉⴼⵓⵍⴰ: ⴰⴽⴽ ⵙ ⵓⵥⴻⴹⴹⴰ.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
+    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "Tizi Wezzu.", title2: "Azakka, s yiwen wul.", sub: "Tamdint yettḥaraben ɣef uẓar-is, tettwali ɣer uzekka.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
     quick: "ⴰⴽⵛⴰⵎ ⴰⵔⵓⵔⴰⵏ", reportT: "ⵎⵎⴻⵍ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ ⴰⵙⵓⵜⴻⵔ ⵉⵏⴻⴽ.", news: "ⵉⵙⴰⵍⵏ", demarches: "ⵜⵉⴱⵔⵉⴷⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ",
     discover: "ⴰⴷ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵙⵙⵓⴼⵖ ⵜⴰⵖⵍⵉⵎⵜ", markets: "ⵜⵉⵙⵓⵇⵉⵏ", infos: "ⵉⵙⴰⵍⵏ ⵉⵎⴻⵥⵍⴰⵢⴻⵏ" },
 };
 
 const slides = [
-  { src: hero, label: "Tizi Ouzou vue depuis Belloua" },
-  { src: tilesdit, label: "Le Djurdjura enneigé" },
-  { src: nuit, label: "La ville, la nuit" },
+  { src: rue, label: "Au cœur de Tizi Ouzou" },
+  { src: village, label: "Tizi Ouzou et sa vallée" },
+  { src: wilaya, label: "Le siège de la wilaya" },
 ];
 
 /** Genêt flower — the site's signature mark */
@@ -86,7 +84,7 @@ function SectionTitle({ kicker, title, light }: { kicker: string; title: string;
   return (
     <div className="reveal mb-10">
       <div className={`flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] ${light ? "text-saffron" : "text-clay"}`}>
-        <Flower className="h-5 w-5 text-saffron" /> {kicker}
+        <Flower className="h-3 w-3 shrink-0 text-saffron" /> {kicker}
       </div>
       <h2 className={`mt-3 font-display text-4xl font-semibold tracking-tight leading-[1.02] md:text-6xl ${light ? "text-cream" : "text-night"}`}>{title}</h2>
     </div>
@@ -152,24 +150,22 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative h-[100svh] min-h-[640px] overflow-hidden bg-night">
+      <section className="relative h-[92svh] min-h-[620px] overflow-hidden bg-night">
         {slides.map((s, i) => (
           <div key={i} className={`absolute inset-0 transition-opacity duration-[1800ms] ${i === slide ? "opacity-100" : "opacity-0"}`}>
             <img src={s.src} alt={s.label} key={i === slide ? `on-${slide}` : i} className={`h-full w-full object-cover ${i === slide ? "animate-kenburns" : ""}`} style={{ transform: `translateY(${scrollY * 0.3}px)` }} width={1920} height={1088} />
           </div>
         ))}
         <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-night/30" />
-        <Flower className="pointer-events-none absolute -end-32 top-24 h-[34rem] w-[34rem] text-saffron/15 animate-spin-slow" />
-        <Flower className="pointer-events-none absolute end-[20%] top-[30%] hidden h-16 w-16 text-saffron/70 animate-spin-slow md:block" />
 
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-20">
-          <div className="flex animate-rise items-center gap-2 text-sm font-semibold uppercase tracking-[0.3em] text-saffron"><Flower className="h-5 w-5" />{t.kicker}</div>
-          <h1 className="mt-4 max-w-5xl font-display text-5xl font-bold leading-[0.92] tracking-tight text-cream sm:text-7xl lg:text-[7.5rem]">
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pt-28 pb-8">
+          <div className="animate-rise text-xs font-semibold uppercase text-saffron">{t.kicker}</div>
+          <h1 className="mt-4 max-w-6xl font-display text-5xl leading-[1.04] text-cream sm:text-7xl lg:text-8xl">
             <span className="block animate-rise" style={{ animationDelay: ".15s" }}>{t.title1}</span>
             <span className="block animate-rise text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
           </h1>
-          <p className="mt-6 max-w-xl animate-rise text-lg text-cream/85" style={{ animationDelay: ".4s" }}>{t.sub}</p>
-          <div className="mt-10 grid gap-4 animate-rise lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
+          <p className="mt-5 max-w-xl animate-rise text-base leading-relaxed text-cream/85" style={{ animationDelay: ".4s" }}>{t.sub}</p>
+          <div className="mt-6 grid gap-4 animate-rise lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
             <label className="flex items-center gap-3 rounded-full bg-cream/95 px-6 py-4 shadow-2xl backdrop-blur focus-within:ring-4 focus-within:ring-saffron/50">
               <Search className="h-5 w-5 text-olive" strokeWidth={1.5} />
               <input className="w-full bg-transparent text-base text-night outline-none placeholder:text-muted-foreground" placeholder={t.search} />
@@ -179,7 +175,7 @@ function Index() {
               <a href="#demarches" className="flex items-center gap-2 rounded-full border border-cream/50 px-6 py-4 font-bold text-cream backdrop-blur transition hover:bg-cream hover:text-night">{t.proc}</a>
             </div>
           </div>
-          <div className="mt-10 flex items-center gap-4 text-cream/80">
+          <div className="mt-6 flex items-center gap-4 text-cream/80">
             {slides.map((s, i) => (
               <button key={i} onClick={() => setSlide(i)} className="group flex-1 text-start" aria-label={s.label}>
                 <div className="h-0.5 overflow-hidden bg-cream/25"><div className={`h-full bg-saffron transition-all ${i === slide ? "w-full duration-[6500ms] ease-linear" : "w-0 duration-0"}`} /></div>
@@ -261,7 +257,7 @@ function Index() {
       {/* MARQUEE */}
       <div className="overflow-hidden border-y border-border bg-cream py-6">
         <div className="flex w-max animate-marquee gap-12 whitespace-nowrap font-display text-4xl font-bold text-night md:text-6xl">
-          {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "✿", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Djurdjura", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "ⵣ" ? "text-saffron" : ""}>{w}</span>))}
+          {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "✿", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Djurdjura", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "✿" ? "self-center text-lg text-saffron" : w === "ⵣ" ? "text-saffron" : ""}>{w}</span>))}
         </div>
       </div>
 
@@ -290,7 +286,7 @@ function Index() {
           </div>
           <aside className="reveal rounded-[2rem] bg-secondary p-8">
             <h3 className="font-display text-3xl">Agenda</h3>
-            <Flower className="mt-2 h-6 w-6 text-saffron" />
+            <Flower className="mt-2 h-3 w-3 text-saffron" />
             <ul className="mt-6 divide-y divide-border">
               {[["12", "NOV", "Conseil municipal ouvert au public", "Salle des délibérations"], ["18", "NOV", "Festival de la poterie", "Maison de la culture Mouloud Mammeri"], ["24", "NOV", "Marathon de Tizi Ouzou", "Départ : Stade du 1er Novembre"], ["05", "DÉC", "Journée portes ouvertes de l'état civil", "Hôtel de ville"], ["12", "JAN", "Yennayer 2977 — célébrations", "Place de l'Olivier"]].map(([d, m, tt, l]) => (
                 <li key={tt} className="group flex gap-5 py-5">

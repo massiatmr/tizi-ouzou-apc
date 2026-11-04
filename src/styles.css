@@ -169,8 +169,8 @@
   --color-saffron: var(--saffron);
   --color-clay: var(--clay);
   --color-leaf: var(--leaf);
-  --font-display: "Bricolage Grotesque", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
-  --font-sans: "Instrument Sans", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
+  --font-display: "DM Serif Display", "Noto Kufi Arabic", "Noto Sans Tifinagh", serif;
+  --font-sans: "Manrope", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
 }
 
 @utility kabyle-band {
@@ -208,7 +208,9 @@
 @utility animate-spin-slow { animation: spin-slow 40s linear infinite; }
 
 @layer base {
-  * { border-color: var(--color-border); }
+  * { border-color: var(--color-border); letter-spacing: 0; }
+  .font-display { font-weight: 400; letter-spacing: 0; }
+  [class*="tracking-"] { letter-spacing: 0; }
   html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
