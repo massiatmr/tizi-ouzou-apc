@@ -134,12 +134,15 @@
 
 /* ===== Tizi Ouzou design system ===== */
 :root {
-  --cream: oklch(0.965 0.02 85);
-  --night: oklch(0.24 0.045 255);
-  --olive: oklch(0.42 0.08 125);
-  --olive-deep: oklch(0.3 0.06 125);
-  --saffron: oklch(0.8 0.16 80);
-  --clay: oklch(0.56 0.15 38);
+  /* Genêt palette: broom-flower yellow, fresh leaf green, warm ink */
+  --cream: oklch(0.975 0.025 95);
+  --night: oklch(0.22 0.025 110);
+  --olive: oklch(0.58 0.14 135);
+  --olive-deep: oklch(0.26 0.04 120);
+  --saffron: oklch(0.87 0.17 95);
+  --clay: oklch(0.55 0.13 140);
+  --leaf: oklch(0.62 0.15 140);
+  --shadow-glow: 0 18px 40px -12px oklch(0.87 0.17 95 / 0.6);
   --background: var(--cream);
   --foreground: var(--night);
   --card: oklch(0.985 0.012 85);
@@ -165,8 +168,9 @@
   --color-olive-deep: var(--olive-deep);
   --color-saffron: var(--saffron);
   --color-clay: var(--clay);
-  --font-display: "Fraunces", "Noto Kufi Arabic", "Noto Sans Tifinagh", serif;
-  --font-sans: "Manrope", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
+  --color-leaf: var(--leaf);
+  --font-display: "Bricolage Grotesque", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
+  --font-sans: "Instrument Sans", "Noto Kufi Arabic", "Noto Sans Tifinagh", sans-serif;
 }
 
 @utility kabyle-band {
