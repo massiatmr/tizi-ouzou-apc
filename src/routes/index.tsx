@@ -6,13 +6,17 @@ import {
   Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube,
 } from "lucide-react";
 
-import hero from "@/assets/hero_djurdjura.jpg";
+import hero from "@/assets/tizi_belloua.jpg";
 import mairie from "@/assets/mairie.jpg";
 import statue from "@/assets/statue.jpg";
 import genet from "@/assets/genet.png";
-import village from "@/assets/village_kabyle.jpg";
+import village from "@/assets/tizi_vue.jpg";
 import artisanat from "@/assets/artisanat.jpg";
-import rue from "@/assets/ville_rue.jpg";
+import rue from "@/assets/tizi_centre.jpg";
+import tilesdit from "@/assets/tizi_tilesdit.jpg";
+import sommet from "@/assets/tizi_village.jpg";
+import nuit from "@/assets/tizi_nuit.jpg";
+import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
 
 export const Route = createFileRoute("/")({
@@ -46,10 +50,24 @@ const T = {
 };
 
 const slides = [
-  { src: hero, label: "Le Djurdjura veille sur la ville" },
-  { src: mairie, label: "L'Hôtel de ville, de nuit" },
-  { src: statue, label: "Statue monumentale, centre-ville" },
+  { src: hero, label: "Tizi Ouzou vue depuis Belloua" },
+  { src: tilesdit, label: "Le Djurdjura enneigé" },
+  { src: nuit, label: "La ville, la nuit" },
 ];
+
+/** Genêt flower — the site's signature mark */
+function Flower({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 64" className={className} aria-hidden>
+      <g fill="currentColor">
+        <path d="M32 6c7 0 12 6 12 13 0 5-5 9-12 9s-12-4-12-9C20 12 25 6 32 6z" />
+        <path d="M14 26c5-2 12 1 15 7s1 12-4 14-12-1-15-7-1-12 4-14z" opacity=".85" />
+        <path d="M50 26c-5-2-12 1-15 7s-1 12 4 14 12-1 15-7 1-12-4-14z" opacity=".85" />
+        <path d="M32 34c4 0 7 5 7 11s-3 11-7 11-7-5-7-11 3-11 7-11z" opacity=".7" />
+      </g>
+    </svg>
+  );
+}
 
 function useReveal() {
   useEffect(() => {
@@ -73,9 +91,9 @@ function SectionTitle({ kicker, title, light }: { kicker: string; title: string;
   return (
     <div className="reveal mb-10">
       <div className={`flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] ${light ? "text-saffron" : "text-clay"}`}>
-        <Ornament className="h-3 w-16" /> {kicker}
+        <Flower className="h-5 w-5 text-saffron" /> {kicker}
       </div>
-      <h2 className={`mt-3 font-display text-4xl font-light leading-[1.05] md:text-6xl ${light ? "text-cream" : "text-night"}`}>{title}</h2>
+      <h2 className={`mt-3 font-display text-4xl font-semibold tracking-tight leading-[1.02] md:text-6xl ${light ? "text-cream" : "text-night"}`}>{title}</h2>
     </div>
   );
 }
