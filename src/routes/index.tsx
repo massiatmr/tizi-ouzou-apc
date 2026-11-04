@@ -338,7 +338,7 @@ function Index() {
               { img: statue, t: "Statue monumentale", s: "Monument", c: "row-span-2" },
               { img: mairie, t: "Hôtel de ville", s: "Patrimoine", c: "" },
               { img: artisanat, t: "Poterie & bijoux", s: "Artisanat", c: "row-span-2" },
-              { img: sommet, t: "Lalla Khedidja au couchant", s: "Montagne", c: "col-span-2 md:col-span-1" },
+              { img: sommet, t: "Le Djurdjura au couchant", s: "Montagne", c: "col-span-2 md:col-span-1" },
               { img: genet, t: "Genêts en fleurs", s: "Nature", c: "" },
               { img: rue, t: "Le centre-ville", s: "Vie urbaine", c: "" },
               { img: village, t: "La ville dans sa vallée", s: "Panorama", c: "" },
