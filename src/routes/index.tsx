@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
       { title: "APC de Tizi Ouzou — Site officiel de la commune" },
       { name: "description", content: "Démarches, signalements, actualités, marchés publics et découverte de Tizi Ouzou : le portail officiel de l'APC." },
       { property: "og:title", content: "APC de Tizi Ouzou — Site officiel" },
-      { property: "og:description", content: "Tizi Ouzou en mouvement : là où nos traditions rencontrent notre futur. Une commune qui préserve son identité et construit son avenir avec ses citoyens." },
+      { property: "og:description", content: "Bâtir, préserver et partager : le nouveau visage de notre commune. Une commune qui préserve son identité et construit son avenir avec ses citoyens." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -38,15 +38,15 @@ export const Route = createFileRoute("/")({
 type Lang = "fr" | "ar" | "kab";
 const T = {
   fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", proc: "Faire une démarche",
-    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Tizi Ouzou en mouvement :", title2: "là où nos traditions rencontrent notre futur.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
+    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Bâtir, préserver et partager :", title2: "le nouveau visage de notre commune.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
   ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
-    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "تيزي وزو في الحركة :", title2: "حيث تلتقي تقاليدنا بمستقبلنا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
+    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "نبني، نحافظ ونشارك :", title2: "الوجه الجديد لبلديتنا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
   kab: { brand: "ⵜⴰⵖⵍⵉⵎⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴱⵔⵉⴷⵉⵏ", "ⵜⵉⵙⵓⵇⵉⵏ", "ⵉⵙⴰⵍⵏ", "ⵙⵙⵓⴼⵖ"], report: "ⵎⵎⴻⵍ ⵜⴰⵖⵓⵕⵜ", proc: "ⴳ ⵜⴰⴱⵔⵉⴷⵜ",
-    kicker: "ⵜⵉⵣⵉ ⵡⵣⵓ · Tizi Wezzu", title1: "Tizi Wezzu tettḥerrek :", title2: "anda ttfaqan leqdan akked azekka.", sub: "Tamdint yettḥaraben ɣef uẓar-is, tettwali ɣer uzekka.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
+    kicker: "ⴰⵙⵇⵇⴰⵎ ⵏ ⵜⴰⵖⵍⵉⵎⵜ · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "ⵙⴱⴻⴷ, ⵃⵔⴻⵣ, ⴱⴹⵓ :", title2: "ⵓⴷⴻⵎ ⴰⵎⴰⵢⵏⵓ ⵏ ⵜⴰⵖⵍⵉⵎⵜ-ⵏⵏⴻⵖ.", sub: "ⵜⴰⵎⴷⵉⵏⵜ ⵢⴻⵜⵜⵃⴰⵔⴰⴱⴻⵏ ⵖⴻⴼ ⵓⵣⴰⵔ-ⵉⵙ, ⵜⴻⵜⵜⵡⴰⵍⵉ ⵖⴻⵔ ⵓⵣⴻⴽⴽⴰ.", search: "ⴷ ⴰⴷ ⵜⵜⵏⴰⴷⵉⴹ? ⴰⴽⴰⵔⴰⴹ…",
     quick: "ⴰⴽⵛⴰⵎ ⴰⵔⵓⵔⴰⵏ", reportT: "ⵎⵎⴻⵍ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ ⴰⵙⵓⵜⴻⵔ ⵉⵏⴻⴽ.", news: "ⵉⵙⴰⵍⵏ", demarches: "ⵜⵉⴱⵔⵉⴷⵉⵏ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ",
     discover: "ⴰⴷ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵙⵙⵓⴼⵖ ⵜⴰⵖⵍⵉⵎⵜ", markets: "ⵜⵉⵙⵓⵇⵉⵏ", infos: "ⵉⵙⴰⵍⵏ ⵉⵎⴻⵥⵍⴰⵢⴻⵏ" },
 };
