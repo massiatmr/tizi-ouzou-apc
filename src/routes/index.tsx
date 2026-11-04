@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Search, AlertTriangle, FileText, Gavel, Newspaper, Compass, PackageSearch,
   ArrowRight, ArrowUpRight, Trash2, Lightbulb, Construction, ScrollText, Trees, MoreHorizontal,
@@ -121,12 +122,12 @@ function Index() {
     <div className="overflow-x-hidden">
       {/* HEADER */}
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "bg-cream/90 shadow-[var(--shadow-soft)] backdrop-blur-xl" : "bg-transparent"}`}>
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-5 py-3">
-          <a href="#" className="flex items-center gap-3">
-            <img src={blason} alt="Blason de Tizi Ouzou" width={44} height={52} className="h-12 w-auto drop-shadow" />
-            <div className={`leading-tight ${scrolled ? "text-night" : "text-cream"}`}>
-              <div className="font-display text-lg font-semibold">{t.brand}</div>
-              <div className="text-[11px] uppercase tracking-[0.2em] opacity-70">République Algérienne</div>
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-3 sm:flex">
+          <a href="#" className="flex min-w-0 items-center gap-3">
+            <img src={blason} alt="Blason de Tizi Ouzou" width={44} height={52} className="h-11 w-auto shrink-0 drop-shadow sm:h-12" />
+            <div className={`min-w-0 leading-tight ${scrolled ? "text-night" : "text-cream"}`}>
+              <div className="truncate font-display text-lg font-semibold">{t.brand}</div>
+              <div className="text-[9px] uppercase opacity-70 sm:text-[11px]">République Algérienne</div>
             </div>
           </a>
           <nav className={`ms-auto hidden items-center gap-7 text-sm font-semibold lg:flex ${scrolled ? "text-night" : "text-cream"}`}>
@@ -140,9 +141,9 @@ function Index() {
           <a href="#signaler" className="hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
             <AlertTriangle className="h-4 w-4" strokeWidth={1.5} /> {t.report}
           </a>
-          <button onClick={() => setMenu(!menu)} className={`ms-auto lg:hidden ${scrolled ? "text-night" : "text-cream"}`} aria-label="Menu">
+          <Button variant="ghost" size="icon" onClick={() => setMenu(!menu)} className={`ms-auto shrink-0 hover:bg-cream/10 lg:hidden ${scrolled ? "text-night" : "text-cream"}`} aria-label="Menu" aria-expanded={menu}>
             {menu ? <X /> : <Menu />}
-          </button>
+          </Button>
         </div>
         {menu && (
           <div className="mx-4 mb-4 rounded-2xl bg-cream p-6 shadow-xl lg:hidden">
@@ -155,38 +156,41 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative h-[92svh] min-h-[620px] overflow-hidden bg-night">
+      <section className="relative overflow-hidden bg-night sm:h-[92svh] sm:min-h-[620px]">
         {slides.map((s, i) => (
           <div key={i} className={`absolute inset-0 transition-opacity duration-[1800ms] ${i === slide ? "opacity-100" : "opacity-0"}`}>
-            <img src={s.src} alt={s.label} key={i === slide ? `on-${slide}` : i} className={`h-full w-full object-cover ${i === slide ? "animate-kenburns" : ""}`} style={{ transform: `translateY(${scrollY * 0.3}px)` }} width={1920} height={1088} />
+            <img src={s.src} alt={s.label} key={i === slide ? `on-${slide}` : i} className={`hero-photo h-full w-full object-cover object-top sm:object-center ${i === slide ? "sm:animate-kenburns" : ""}`} width={1920} height={1088} />
           </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-night/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-night via-night/65 to-night/20 sm:via-night/40 sm:to-night/30" />
 
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pt-28 pb-8">
-          <div className="animate-rise text-xs font-semibold uppercase text-saffron">{t.kicker}</div>
-          <h1 className="mt-4 max-w-6xl font-display text-4xl leading-[1.08] text-cream sm:text-6xl lg:text-7xl">
+        <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl flex-col justify-end px-5 pt-36 pb-5 sm:h-full sm:min-h-0 sm:pt-28 sm:pb-8">
+          <div className="max-w-[280px] animate-rise text-[10px] font-semibold uppercase leading-relaxed text-saffron sm:max-w-none sm:text-xs">{t.kicker}</div>
+          <h1 className="mt-3 max-w-6xl font-display text-[30px] leading-[1.1] text-cream sm:mt-4 sm:text-6xl lg:text-7xl">
             <span className="block animate-rise" style={{ animationDelay: ".15s" }}>{t.title1}</span>
             <span className="block animate-rise text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
           </h1>
-          <p className="mt-4 max-w-xl animate-rise text-sm leading-relaxed text-cream/85 sm:text-base" style={{ animationDelay: ".4s" }}>{t.sub}</p>
-          <div className="mt-6 grid gap-4 animate-rise lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
-            <label className="flex items-center gap-3 rounded-full bg-cream/95 px-6 py-4 shadow-2xl backdrop-blur focus-within:ring-4 focus-within:ring-saffron/50">
-              <Search className="h-5 w-5 text-olive" strokeWidth={1.5} />
-              <input className="w-full bg-transparent text-base text-night outline-none placeholder:text-muted-foreground" placeholder={t.search} />
+          <p className="mt-3 max-w-xl animate-rise text-xs leading-relaxed text-cream/85 sm:mt-4 sm:text-base" style={{ animationDelay: ".4s" }}><span className="sm:hidden">{t.sub.split(". ")[0]}.</span><span className="hidden sm:inline">{t.sub}</span></p>
+          <div className="mt-5 grid gap-3 animate-rise sm:mt-6 sm:gap-4 lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
+            <label className="flex min-w-0 items-center gap-3 rounded-full bg-cream/95 px-4 py-3 shadow-[var(--shadow-soft)] backdrop-blur focus-within:ring-4 focus-within:ring-saffron/50 sm:px-6 sm:py-4">
+              <Search className="h-5 w-5 shrink-0 text-olive" strokeWidth={1.5} />
+              <input aria-label={t.search} className="min-w-0 w-full bg-transparent text-base text-night outline-none placeholder:text-muted-foreground" placeholder={t.search} />
             </label>
-            <div className="flex flex-wrap gap-3">
-              <a href="#signaler" className="flex items-center gap-2 rounded-full bg-saffron px-6 py-4 font-bold text-night shadow-[var(--shadow-glow)] transition hover:-translate-y-1">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a>
-              <a href="#demarches" className="flex items-center gap-2 rounded-full border border-cream/50 px-6 py-4 font-bold text-cream backdrop-blur transition hover:bg-cream hover:text-night">{t.proc}</a>
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
+              <Button asChild className="h-auto min-h-12 whitespace-normal rounded-full bg-saffron px-3 py-2 text-center text-xs font-bold leading-snug text-night hover:bg-saffron/90 sm:px-6 sm:py-4 sm:text-base"><a href="#signaler">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a></Button>
+              <Button asChild variant="outline" className="h-auto min-h-12 whitespace-normal rounded-full border-cream/50 bg-transparent px-3 py-2 text-center text-xs font-bold leading-snug text-cream backdrop-blur hover:bg-cream hover:text-night sm:px-6 sm:py-4 sm:text-base"><a href="#demarches">{t.proc}</a></Button>
             </div>
           </div>
-          <div className="mt-6 flex items-center gap-4 text-cream/80">
+          <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-cream/80 sm:mt-6 sm:block">
+            <div className="flex min-w-0 items-center gap-3 sm:gap-4">
             {slides.map((s, i) => (
-              <button key={i} onClick={() => setSlide(i)} className="group flex-1 text-start" aria-label={s.label}>
+              <Button variant="ghost" key={i} onClick={() => setSlide(i)} className="group block h-auto min-w-0 flex-1 rounded-none px-0 py-2 text-start hover:bg-transparent" aria-label={s.label} aria-pressed={i === slide}>
                 <div className="h-0.5 overflow-hidden bg-cream/25"><div className={`h-full bg-saffron transition-all ${i === slide ? "w-full duration-[6500ms] ease-linear" : "w-0 duration-0"}`} /></div>
                 <div className={`mt-2 hidden text-xs sm:block ${i === slide ? "text-cream" : "opacity-60"}`}>0{i + 1} — {s.label}</div>
-              </button>
+              </Button>
             ))}
+            </div>
+            <span className="shrink-0 text-[10px] tabular-nums sm:hidden">0{slide + 1} / 0{slides.length}</span>
           </div>
         </div>
       </section>
