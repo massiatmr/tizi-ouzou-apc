@@ -164,14 +164,16 @@ function Index() {
           </div>
         ))}
         <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-night/30" />
-        <div className="pointer-events-none absolute -end-40 top-1/4 font-display text-[40rem] leading-none text-cream/5 animate-spin-slow select-none">ⵣ</div>
+        <Flower className="pointer-events-none absolute -end-32 top-24 h-[34rem] w-[34rem] text-saffron/15 animate-spin-slow" />
+        <Flower className="pointer-events-none absolute end-[20%] top-[30%] hidden h-16 w-16 text-saffron/70 animate-spin-slow md:block" />
 
         <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-20">
-          <div className="animate-rise text-sm font-semibold uppercase tracking-[0.3em] text-saffron">{t.kicker}</div>
-          <h1 className="mt-4 font-display text-5xl font-light leading-[0.95] text-cream sm:text-7xl lg:text-[8.5rem]">
+          <div className="flex animate-rise items-center gap-2 text-sm font-semibold uppercase tracking-[0.3em] text-saffron"><Flower className="h-5 w-5" />{t.kicker}</div>
+          <h1 className="mt-4 max-w-5xl font-display text-5xl font-bold leading-[0.92] tracking-tight text-cream sm:text-7xl lg:text-[7.5rem]">
             <span className="block animate-rise" style={{ animationDelay: ".15s" }}>{t.title1}</span>
-            <span className="block animate-rise italic text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
+            <span className="block animate-rise text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
           </h1>
+          <p className="mt-6 max-w-xl animate-rise text-lg text-cream/85" style={{ animationDelay: ".4s" }}>{t.sub}</p>
           <div className="mt-10 grid gap-4 animate-rise lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
             <label className="flex items-center gap-3 rounded-full bg-cream/95 px-6 py-4 shadow-2xl backdrop-blur focus-within:ring-4 focus-within:ring-saffron/50">
               <Search className="h-5 w-5 text-olive" strokeWidth={1.5} />
