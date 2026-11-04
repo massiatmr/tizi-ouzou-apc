@@ -178,7 +178,7 @@ function Index() {
           <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-cream/80 sm:mt-6 sm:block">
             <div className="flex min-w-0 items-center gap-3 sm:gap-4">
             {slides.map((s, i) => (
-              <Button variant="ghost" key={i} onClick={() => setSlide(i)} className="group block h-auto min-w-0 flex-1 rounded-none px-0 py-2 text-start hover:bg-transparent" aria-label={tr(s.label)} aria-pressed={i === slide}>
+              <Button variant="ghost" key={i} onClick={() => setSlide(i)} className="group block h-auto min-w-0 flex-1 whitespace-normal rounded-none px-0 py-2 text-start hover:bg-transparent" aria-label={tr(s.label)} aria-pressed={i === slide}>
                 <div className="h-0.5 overflow-hidden bg-cream/25">{i === slide && <div key={slide} className="slide-progress h-full bg-saffron" />}</div>
                 <div className={`mt-2 hidden text-xs sm:block ${i === slide ? "text-cream" : "opacity-60"}`}>0{i + 1} — {tr(s.label)}</div>
               </Button>
