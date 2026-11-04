@@ -167,8 +167,8 @@ function Index() {
         <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl flex-col justify-end px-5 pt-36 pb-5 sm:h-full sm:min-h-0 sm:pt-28 sm:pb-8">
           <div className="max-w-[280px] animate-rise text-[10px] font-semibold uppercase leading-relaxed text-saffron sm:max-w-none sm:text-xs">{t.kicker}</div>
           <h1 className="mt-3 max-w-6xl font-display text-[30px] leading-[1.1] text-cream sm:mt-4 sm:text-6xl lg:text-7xl">
-            <span className="block animate-rise" style={{ animationDelay: ".15s" }}>{t.title1}</span>
-            <span className="block animate-rise text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
+            <span className="block animate-rise text-balance" style={{ animationDelay: ".15s" }}>{t.title1}</span>
+            <span className="block animate-rise text-balance text-saffron" style={{ animationDelay: ".3s" }}>{t.title2}</span>
           </h1>
           <p className="mt-3 max-w-xl animate-rise text-xs leading-relaxed text-cream/85 sm:mt-4 sm:text-base" style={{ animationDelay: ".4s" }}><span className="sm:hidden">{t.sub.split(". ")[0]}.</span><span className="hidden sm:inline">{t.sub}</span></p>
           <div className="mt-5 grid gap-3 animate-rise sm:mt-6 sm:gap-4 lg:grid-cols-[1fr_auto]" style={{ animationDelay: ".5s" }}>
