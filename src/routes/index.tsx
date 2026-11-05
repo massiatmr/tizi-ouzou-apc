@@ -16,7 +16,7 @@ import village from "@/assets/tizi_vue.jpg";
 import artisanat from "@/assets/artisanat.jpg";
 import rue from "@/assets/tizi_centre.jpg";
 import sommet from "@/assets/tizi_village.jpg";
-import boulevard from "@/assets/tizi_boulevard.jpg";
+import signalerIllu from "@/assets/signaler_illustration.png.asset.json";
 import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
 import pontNuit from "@/assets/pont_nuit.jpg.asset.json";
@@ -40,15 +40,15 @@ export const Route = createFileRoute("/")({
 
 type Lang = "fr" | "ar" | "kab";
 const T = {
-  fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", proc: "Faire une démarche",
+  fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", cta: "Je participe", proc: "Faire une démarche",
     kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Bâtir, préserver et partager :", title2: "construisons notre commune ensemble.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
-  ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
+  ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", cta: "أشارك", proc: "القيام بإجراء",
     kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "نبني، نحافظ ونشارك :", title2: "لنبنِ بلديتنا معًا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
-  kab: { brand: "ⵜⴰⵖⵉⵡⴰⵏⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴽⵍⵉⵡⵉⵏ", "ⵜⵉⵎⵢⴰⵡⵉⵏ ⵜⵉⵣⵓⵢⴰⵣ", "ⵉⵙⴰⵍⵍⴻⵏ", "ⵉⵙⵙⵉⵏ"], report: "ⵎⵎⴻⵍ ⵓⴳⵓⵔ", proc: "ⴻⴳ ⵜⴰⴽⵍⵉ ⵜⴰⵏⴻⴷⴱⴰⵍⵜ",
+  kab: { brand: "ⵜⴰⵖⵉⵡⴰⵏⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴽⵍⵉⵡⵉⵏ", "ⵜⵉⵎⵢⴰⵡⵉⵏ ⵜⵉⵣⵓⵢⴰⵣ", "ⵉⵙⴰⵍⵍⴻⵏ", "ⵉⵙⵙⵉⵏ"], report: "ⵎⵎⴻⵍ ⵓⴳⵓⵔ", cta: "ⴰⵙⴻⴼⵔⴻⴽⴻⵖ", proc: "ⴻⴳ ⵜⴰⴽⵍⵉ ⵜⴰⵏⴻⴷⴱⴰⵍⵜ",
     kicker: "ⴰⵙⵇⵇⴰⵎ ⵏ ⵜⵖⵉⵡⴰⵏⵜ · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "ⵙⴱⴻⴷ, ⵃⵔⴻⵣ, ⴱⴹⵓ :", title2: "ⴰⴷ ⵏⴻⴱⵏⵓ ⵜⴰⵖⵉⵡⴰⵏⵜ-ⵏⵏⴻⵖ ⵙ ⵢⵉⵡⴻⵏ.", sub: "ⵜⴰⵎⴷⵉⵏⵜ ⵢⴻⵜⵜⵃⴰⵔⴰⴱⴻⵏ ⵖⴻⴼ ⵓⵣⴰⵔ-ⵉⵙ, ⵜⴻⵜⵜⵡⴰⵍⵉ ⵖⴻⵔ ⵓⵣⴻⴽⴽⴰ. ⵙ ⵢⵉⵡⴻⵏ, ⴰⴷ ⵏⴻⵙⵙⴻⵎⵖⴻⵔ ⵜⵉⵣⵉ ⵡⵣⵓ ⵢⴻⵙⵄⴰⵏ ⵜⴰⵎⴻⴷⴷⵓⵔⵜ, ⵜⵉⵣⴻⴳⵣⵉ ⴷ ⵜⵡⵉⵣⵉ.", search: "ⴷ ⴰⵛⵓ ⵜⴻⵜⵜⵏⴰⴷⵉⴹ? ⴰⵔⵔⴰⵜ ⵏ ⵜⵍⴰⵍⵉⵜ, ⵜⵓⵔⴰⴳⵜ…",
     quick: "ⴰⴽⵛⴰⵎ ⵙ ⵜⵖⴰⵡⵍⴰ", reportT: "ⵎⵎⴻⵍ ⵓⴳⵓⵔ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ-ⵉⵜ ⴰⵔⵎⴰ ⵢⴻⴼⵔⴰ.", news: "ⵉⵙⴰⵍⵍⴻⵏ ⴷ ⵓⵡⴰⵀⵉⵍ", demarches: "ⵜⵉⴽⵍⵉⵡⵉⵏ ⵜⵉⵏⴻⴷⴱⴰⵍⵉⵏ ⵉ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ ⴰⵟⴰⵙ",
     discover: "ⴷ ⴰⵛⵓ ⴰⵔⴰ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵉⵙⵙⵉⵏ ⵜⴰⵖⵉⵡⴰⵏⵜ", markets: "ⵜⵉⵎⵢⴰⵡⵉⵏ ⵜⵉⵣⵓⵢⴰⵣ", infos: "ⵜⴰⵍⵖⵓⵜ ⵉⵡⵓⵍⵎⴻⵏ" },
@@ -133,7 +133,7 @@ function Index() {
             ))}
           </div>
           <a href="#signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
-            <AlertTriangle className="h-4 w-4" strokeWidth={1.5} /> {t.report}
+            <Lightbulb className="h-4 w-4" strokeWidth={1.5} /> {t.cta}
           </a>
           <Button variant="ghost" size="icon" onClick={() => setMenu(!menu)} className={`ms-auto shrink-0 hover:bg-cream/10 lg:hidden ${scrolled ? "text-night" : "text-cream"}`} aria-label={tr("Menu")} aria-expanded={menu}>
             {menu ? <X /> : <Menu />}
@@ -232,9 +232,8 @@ function Index() {
       <section id="signaler" className="relative bg-night py-24 text-cream">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2">
           <div className="reveal relative">
-            <div className="relative overflow-hidden rounded-t-[4rem] rounded-b-[2rem] sm:rounded-t-[7rem]">
-              <img src={boulevard} alt={tr("Rue de Tizi Ouzou")} loading="lazy" className="aspect-[4/3] w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-night/75 via-night/10 to-transparent" />
+            <div className="relative overflow-hidden rounded-t-[4rem] rounded-b-[2rem] bg-cream sm:rounded-t-[7rem]">
+              <img src={signalerIllu.url} alt={tr("Signaler un problème")} loading="lazy" className="aspect-[3/4] w-full object-cover" />
               <div className="absolute bottom-5 start-5 flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-night">
                 <Flower className="h-3 w-3 shrink-0 text-saffron" /> {tr("Votre rue, votre quartier")}
               </div>
