@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePageMotion } from "@/hooks/use-page-motion";
-import { AnimatedNumber } from "@/components/animated-number";
 import { tifinagh } from "@/lib/tifinagh";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +16,7 @@ import village from "@/assets/tizi_vue.jpg";
 import artisanat from "@/assets/artisanat.jpg";
 import rue from "@/assets/tizi_centre.jpg";
 import sommet from "@/assets/tizi_village.jpg";
+import boulevard from "@/assets/tizi_boulevard.jpg";
 import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
 import pontNuit from "@/assets/pont_nuit.jpg.asset.json";
@@ -232,12 +232,12 @@ function Index() {
       <section id="signaler" className="relative bg-night py-24 text-cream">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2">
           <div className="reveal relative">
-            <div className="overflow-hidden rounded-t-[12rem] rounded-b-[2rem]">
-              <img src={genet} alt={tr("Genêts en fleurs de Kabylie")} loading="lazy" className="aspect-[4/5] w-full object-cover" />
-            </div>
-            <div className="absolute -bottom-8 -end-4 rounded-3xl bg-saffron p-6 text-night shadow-2xl md:-end-10">
-              <div className="font-display text-5xl"><AnimatedNumber value={2} label={tr("2 min")} reducedMotion={reducedMotion} /></div>
-              <div className="text-sm font-semibold">{tr("pour signaler")}</div>
+            <div className="relative overflow-hidden rounded-t-[4rem] rounded-b-[2rem] sm:rounded-t-[7rem]">
+              <img src={boulevard} alt={tr("Rue de Tizi Ouzou")} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-night/75 via-night/10 to-transparent" />
+              <div className="absolute bottom-5 start-5 flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-night">
+                <Flower className="h-3 w-3 shrink-0 text-saffron" /> {tr("Votre rue, votre quartier")}
+              </div>
             </div>
           </div>
           <div>
