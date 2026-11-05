@@ -233,7 +233,7 @@ function Index() {
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2">
           <div className="reveal relative">
             <div className="relative overflow-hidden rounded-t-[4rem] rounded-b-[2rem] bg-cream sm:rounded-t-[7rem]">
-              <img src={signalerIllu.url} alt={tr("Signaler un problème")} loading="lazy" className="aspect-[4/3] w-full object-cover object-top sm:aspect-[3/4]" />
+              <img src={signalerIllu.url} alt={tr("Signaler un problème")} loading="lazy" className="aspect-[3/4] w-full object-cover" />
               <div className="absolute bottom-5 start-5 flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-night">
                 <Flower className="h-3 w-3 shrink-0 text-saffron" /> {tr("Votre rue, votre quartier")}
               </div>
