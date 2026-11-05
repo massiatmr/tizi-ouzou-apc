@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
       { title: "APC de Tizi Ouzou — Site officiel de la commune" },
       { name: "description", content: "Démarches, signalements, actualités, marchés publics et découverte de Tizi Ouzou : le portail officiel de l'APC." },
       { property: "og:title", content: "APC de Tizi Ouzou — Site officiel" },
-      { property: "og:description", content: "Bâtir, préserver et partager : le nouveau visage de notre commune. Une commune qui préserve son identité et construit son avenir avec ses citoyens." },
+      { property: "og:description", content: "Bâtir, préserver et partager : construisons notre commune ensemble. Une commune qui préserve son identité et construit son avenir avec ses citoyens." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -41,15 +41,15 @@ export const Route = createFileRoute("/")({
 type Lang = "fr" | "ar" | "kab";
 const T = {
   fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", proc: "Faire une démarche",
-    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Bâtir, préserver et partager :", title2: "le nouveau visage de notre commune.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
+    kicker: "Assemblée Populaire Communale · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "Bâtir, préserver et partager :", title2: "construisons notre commune ensemble.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
     quick: "Accès rapides", reportT: "Signalez en 2 minutes,", reportT2: "suivez jusqu'à la résolution.", news: "Actualités & agenda", demarches: "Démarches les plus demandées",
     discover: "Que faire à Tizi ?", explore: "Explorer la commune", markets: "Marchés publics", infos: "Infos pratiques" },
   ar: { brand: "بلدية تيزي وزو", nav: ["الإجراءات", "الصفقات العمومية", "الأخبار", "اكتشف"], report: "الإبلاغ عن مشكلة", proc: "القيام بإجراء",
-    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "نبني، نحافظ ونشارك :", title2: "الوجه الجديد لبلديتنا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
+    kicker: "بلدية تيزي وزو · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "نبني، نحافظ ونشارك :", title2: "لنبنِ بلديتنا معًا.", sub: "مدينة تعتز بجذورها وتتطلع إلى الغد. معًا، نبني تيزي وزو أكثر حيوية وخضرة وتضامنًا.", search: "عمّا تبحث؟ شهادة ميلاد، رخصة…",
     quick: "وصول سريع", reportT: "أبلغ في دقيقتين،", reportT2: "وتابع طلبك حتى الحل.", news: "الأخبار والأجندة", demarches: "الإجراءات الأكثر طلبًا",
     discover: "ماذا تفعل في تيزي؟", explore: "استكشف البلدية", markets: "الصفقات العمومية", infos: "معلومات عملية" },
   kab: { brand: "ⵜⴰⵖⵉⵡⴰⵏⵜ ⵏ ⵜⵉⵣⵉ ⵡⵣⵓ", nav: ["ⵜⵉⴽⵍⵉⵡⵉⵏ", "ⵜⵉⵎⵢⴰⵡⵉⵏ ⵜⵉⵣⵓⵢⴰⵣ", "ⵉⵙⴰⵍⵍⴻⵏ", "ⵉⵙⵙⵉⵏ"], report: "ⵎⵎⴻⵍ ⵓⴳⵓⵔ", proc: "ⴻⴳ ⵜⴰⴽⵍⵉ ⵜⴰⵏⴻⴷⴱⴰⵍⵜ",
-    kicker: "ⴰⵙⵇⵇⴰⵎ ⵏ ⵜⵖⵉⵡⴰⵏⵜ · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "ⵙⴱⴻⴷ, ⵃⵔⴻⵣ, ⴱⴹⵓ :", title2: "ⵓⴷⴻⵎ ⴰⵎⴰⵢⵏⵓ ⵏ ⵜⵖⵉⵡⴰⵏⵜ-ⵏⵏⴻⵖ.", sub: "ⵜⴰⵎⴷⵉⵏⵜ ⵢⴻⵜⵜⵃⴰⵔⴰⴱⴻⵏ ⵖⴻⴼ ⵓⵣⴰⵔ-ⵉⵙ, ⵜⴻⵜⵜⵡⴰⵍⵉ ⵖⴻⵔ ⵓⵣⴻⴽⴽⴰ. ⵙ ⵢⵉⵡⴻⵏ, ⴰⴷ ⵏⴻⵙⵙⴻⵎⵖⴻⵔ ⵜⵉⵣⵉ ⵡⵣⵓ ⵢⴻⵙⵄⴰⵏ ⵜⴰⵎⴻⴷⴷⵓⵔⵜ, ⵜⵉⵣⴻⴳⵣⵉ ⴷ ⵜⵡⵉⵣⵉ.", search: "ⴷ ⴰⵛⵓ ⵜⴻⵜⵜⵏⴰⴷⵉⴹ? ⴰⵔⵔⴰⵜ ⵏ ⵜⵍⴰⵍⵉⵜ, ⵜⵓⵔⴰⴳⵜ…",
+    kicker: "ⴰⵙⵇⵇⴰⵎ ⵏ ⵜⵖⵉⵡⴰⵏⵜ · ⵜⵉⵣⵉ ⵡⵣⵓ", title1: "ⵙⴱⴻⴷ, ⵃⵔⴻⵣ, ⴱⴹⵓ :", title2: "ⴰⴷ ⵏⴻⴱⵏⵓ ⵜⴰⵖⵉⵡⴰⵏⵜ-ⵏⵏⴻⵖ ⵙ ⵢⵉⵡⴻⵏ.", sub: "ⵜⴰⵎⴷⵉⵏⵜ ⵢⴻⵜⵜⵃⴰⵔⴰⴱⴻⵏ ⵖⴻⴼ ⵓⵣⴰⵔ-ⵉⵙ, ⵜⴻⵜⵜⵡⴰⵍⵉ ⵖⴻⵔ ⵓⵣⴻⴽⴽⴰ. ⵙ ⵢⵉⵡⴻⵏ, ⴰⴷ ⵏⴻⵙⵙⴻⵎⵖⴻⵔ ⵜⵉⵣⵉ ⵡⵣⵓ ⵢⴻⵙⵄⴰⵏ ⵜⴰⵎⴻⴷⴷⵓⵔⵜ, ⵜⵉⵣⴻⴳⵣⵉ ⴷ ⵜⵡⵉⵣⵉ.", search: "ⴷ ⴰⵛⵓ ⵜⴻⵜⵜⵏⴰⴷⵉⴹ? ⴰⵔⵔⴰⵜ ⵏ ⵜⵍⴰⵍⵉⵜ, ⵜⵓⵔⴰⴳⵜ…",
     quick: "ⴰⴽⵛⴰⵎ ⵙ ⵜⵖⴰⵡⵍⴰ", reportT: "ⵎⵎⴻⵍ ⵓⴳⵓⵔ ⴷⴻⴳ 2 ⵏ ⵜⵓⵙⴷⵉⴷⵉⵏ,", reportT2: "ⴹⴼⴻⵕ-ⵉⵜ ⴰⵔⵎⴰ ⵢⴻⴼⵔⴰ.", news: "ⵉⵙⴰⵍⵍⴻⵏ ⴷ ⵓⵡⴰⵀⵉⵍ", demarches: "ⵜⵉⴽⵍⵉⵡⵉⵏ ⵜⵉⵏⴻⴷⴱⴰⵍⵉⵏ ⵉ ⵢⴻⵜⵜⵡⴰⵙⵓⵜⵔⴻⵏ ⴰⵟⴰⵙ",
     discover: "ⴷ ⴰⵛⵓ ⴰⵔⴰ ⵜⴻⴳⴳⴻⴹ ⴷⴻⴳ ⵜⵉⵣⵉ?", explore: "ⵉⵙⵙⵉⵏ ⵜⴰⵖⵉⵡⴰⵏⵜ", markets: "ⵜⵉⵎⵢⴰⵡⵉⵏ ⵜⵉⵣⵓⵢⴰⵣ", infos: "ⵜⴰⵍⵖⵓⵜ ⵉⵡⵓⵍⵎⴻⵏ" },
 };
@@ -160,7 +160,7 @@ function Index() {
 
         <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl flex-col justify-end px-5 pt-36 pb-5 sm:h-full sm:min-h-0 sm:pt-28 sm:pb-8">
           <div className="max-w-[280px] animate-rise text-[10px] font-semibold uppercase leading-relaxed text-saffron sm:max-w-none sm:text-xs">{t.kicker}</div>
-          <h1 key={`${lang}-${slide}`} className="hero-heading mt-3 max-w-6xl font-display text-[30px] leading-[1.1] text-cream sm:mt-4 sm:text-5xl lg:text-6xl">
+          <h1 key={lang} className="hero-heading mt-3 max-w-6xl font-display text-[30px] leading-[1.1] text-cream sm:mt-4 sm:text-5xl lg:text-6xl">
             <span className="headline-mask"><span className="headline-line text-balance">{t.title1}</span></span>
             <span className="headline-mask"><span className="headline-line text-balance text-saffron">{t.title2}</span></span>
           </h1>
@@ -261,7 +261,7 @@ function Index() {
       {/* MARQUEE */}
       <div className="motion-marquee overflow-hidden border-y border-border bg-cream py-6">
         <div className="flex w-max animate-marquee gap-12 whitespace-nowrap font-display text-4xl font-bold text-night md:text-6xl">
-          {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "✿", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Djurdjura", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "✿" ? "self-center text-lg text-saffron" : w === "ⵣ" ? "text-saffron" : ""}>{tr(w)}</span>))}
+          {Array.from({ length: 2 }).flatMap((_, j) => ["Tizi Ouzou", "✿", "ⵜⵉⵣⵉ ⵡⵣⵓ", "ⵣ", "تيزي وزو", "ⵣ", "Azul fell-awen", "ⵣ"].map((w, i) => <span key={`${j}-${i}`} className={w === "✿" ? "self-center text-lg text-saffron" : w === "ⵣ" ? "text-saffron" : ""}>{tr(w)}</span>))}
         </div>
       </div>
 
