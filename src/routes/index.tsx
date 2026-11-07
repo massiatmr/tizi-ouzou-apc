@@ -16,7 +16,7 @@ import village from "@/assets/tizi_vue.jpg";
 import artisanat from "@/assets/artisanat.jpg";
 import rue from "@/assets/tizi_centre.jpg";
 import sommet from "@/assets/tizi_village.jpg";
-import signalerIllu from "@/assets/signaler_illustration.png.asset.json";
+import signalerIllu from "@/assets/signaler_illustration_cut.png";
 import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
 import pontNuit from "@/assets/pont_nuit.jpg.asset.json";
@@ -127,9 +127,9 @@ function Index() {
           <nav className={`ms-auto hidden items-center gap-7 text-sm font-semibold lg:flex ${scrolled ? "text-night" : "text-cream"}`}>
             {t.nav.map((n) => <a key={n} href="#" className="relative after:absolute after:-bottom-1 after:start-0 after:h-0.5 after:w-0 after:bg-saffron after:transition-all hover:after:w-full">{n}</a>)}
           </nav>
-          <div className={`ms-auto hidden items-center rounded-full border p-1 text-xs font-semibold md:flex lg:ms-0 ${scrolled ? "border-border text-night" : "border-cream/40 text-cream"}`}>
-            {([["fr", "FR"], ["ar", "العربية"], ["kab", "ⵜⴰⵎⴰⵣⵉⵖⵜ"]] as [Lang, string][]).map(([k, l]) => (
-              <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-1.5 transition ${lang === k ? "bg-saffron text-night" : "hover:opacity-70"}`}>{l}</button>
+          <div className={`ms-auto hidden items-center rounded-full border p-0.5 text-[11px] font-semibold md:flex lg:ms-0 ${scrolled ? "border-border text-night" : "border-cream/40 text-cream"}`}>
+            {([["fr", "FR"], ["ar", "ع"], ["kab", "ⵣ"]] as [Lang, string][]).map(([k, l]) => (
+              <button key={k} onClick={() => setLang(k)} aria-label={k === "fr" ? "Français" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"} className={`rounded-full px-2 py-1 transition ${lang === k ? "bg-saffron text-night" : "hover:opacity-70"}`}>{l}</button>
             ))}
           </div>
           <a href="#signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
@@ -232,12 +232,7 @@ function Index() {
       <section id="signaler" className="relative bg-night py-24 text-cream">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2">
           <div className="reveal relative">
-            <div className="relative overflow-hidden rounded-t-[4rem] rounded-b-[2rem] bg-cream sm:rounded-t-[7rem]">
-              <img src={signalerIllu.url} alt={tr("Signaler un problème")} loading="lazy" className="aspect-[3/4] w-full object-cover" />
-              <div className="absolute bottom-5 start-5 flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-night">
-                <Flower className="h-3 w-3 shrink-0 text-saffron" /> {tr("Votre rue, votre quartier")}
-              </div>
-            </div>
+            <img src={signalerIllu} alt={tr("Signaler un problème")} loading="lazy" className="mx-auto w-full max-w-md drop-shadow-[0_30px_50px_rgba(0,0,0,0.45)]" />
           </div>
           <div>
             <SectionTitle kicker={t.report} title={`${t.reportT} ${t.reportT2}`} light />
