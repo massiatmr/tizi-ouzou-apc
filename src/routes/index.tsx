@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   Search, AlertTriangle, FileText, Gavel, Newspaper, Compass, PackageSearch,
   ArrowRight, ArrowUpRight, Trash2, Lightbulb, Construction, ScrollText, Trees, MoreHorizontal,
-  Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube, Pause, Play,
+  Download, Phone, Clock, MapPin, Menu, X, Facebook, Instagram, Youtube, Pause, Play, ChevronDown, Globe,
 } from "lucide-react";
 
 import mairie from "@/assets/mairie.jpg";
@@ -97,6 +97,7 @@ function Index() {
   const [paused, setPaused] = useState(false);
   const { pageRef, scrolled, reducedMotion } = usePageMotion();
   const [menu, setMenu] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const t = T[lang];
   const tr = (text: string | undefined) => text === undefined ? "" : lang === "kab" ? (tifinagh[text] ?? text) : text;
   useEffect(() => {
@@ -127,10 +128,37 @@ function Index() {
           <nav className={`ms-auto hidden items-center gap-7 text-sm font-semibold lg:flex ${scrolled ? "text-night" : "text-cream"}`}>
             {t.nav.map((n) => <a key={n} href="#" className="relative after:absolute after:-bottom-1 after:start-0 after:h-0.5 after:w-0 after:bg-saffron after:transition-all hover:after:w-full">{n}</a>)}
           </nav>
-          <div className={`ms-auto hidden items-center rounded-full border p-0.5 text-[11px] font-semibold md:flex lg:ms-0 ${scrolled ? "border-border text-night" : "border-cream/40 text-cream"}`}>
-            {([["fr", "FR"], ["ar", "ع"], ["kab", "ⵣ"]] as [Lang, string][]).map(([k, l]) => (
-              <button key={k} onClick={() => setLang(k)} aria-label={k === "fr" ? "Français" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"} className={`rounded-full px-2 py-1 transition ${lang === k ? "bg-saffron text-night" : "hover:opacity-70"}`}>{l}</button>
-            ))}
+          <div className="relative ms-auto hidden md:block lg:ms-0">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              aria-haspopup="listbox"
+              aria-expanded={langOpen}
+              aria-label={tr("Langue")}
+              className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${scrolled ? "border-border text-night hover:bg-night/5" : "border-cream/40 text-cream hover:bg-cream/10"}`}
+            >
+              <Globe className="h-4 w-4" strokeWidth={1.5} />
+              {lang === "fr" ? "Français" : lang === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${langOpen ? "rotate-180" : ""}`} strokeWidth={2} />
+            </button>
+            {langOpen && (
+              <>
+                <button aria-hidden tabIndex={-1} className="fixed inset-0 z-40 cursor-default" onClick={() => setLangOpen(false)} />
+                <div role="listbox" aria-label={tr("Langue")} className="absolute end-0 top-full z-50 mt-2 w-44 overflow-hidden rounded-2xl bg-cream p-1.5 text-night shadow-xl ring-1 ring-night/10">
+                  {([["fr", "Français"], ["ar", "العربية"], ["kab", "ⵜⴰⵎⴰⵣⵉⵖⵜ"]] as [Lang, string][]).map(([k, l]) => (
+                    <button
+                      key={k}
+                      role="option"
+                      aria-selected={lang === k}
+                      onClick={() => { setLang(k); setLangOpen(false); }}
+                      className={`flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-sm font-semibold transition hover:bg-saffron/20 ${lang === k ? "bg-saffron/30" : ""}`}
+                    >
+                      {l}
+                      {lang === k && <span className="h-2 w-2 rounded-full bg-olive" />}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
           <a href="#signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
             <Lightbulb className="h-4 w-4" strokeWidth={1.5} /> {t.cta}
