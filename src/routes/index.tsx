@@ -91,6 +91,9 @@ function SectionTitle({ kicker, title, light }: { kicker: string; title: string;
   );
 }
 
+// Sélecteur de langue masqué temporairement : remettre à true pour le réafficher.
+const SHOW_LANGUAGES: boolean = false;
+
 function Index() {
   const [lang, setLang] = useState<Lang>("fr");
   const [slide, setSlide] = useState(0);
@@ -128,6 +131,7 @@ function Index() {
           <nav className={`ms-auto hidden items-center gap-7 text-sm font-semibold lg:flex ${scrolled ? "text-night" : "text-cream"}`}>
             {t.nav.map((n) => <a key={n} href="#" className="relative after:absolute after:-bottom-1 after:start-0 after:h-0.5 after:w-0 after:bg-saffron after:transition-all hover:after:w-full">{n}</a>)}
           </nav>
+          {SHOW_LANGUAGES && (
           <div className="relative ms-auto hidden md:block lg:ms-0">
             <button
               onClick={() => setLangOpen(!langOpen)}
@@ -160,6 +164,7 @@ function Index() {
               </>
             )}
           </div>
+          )}
           <a href="#signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
             <Lightbulb className="h-4 w-4" strokeWidth={1.5} /> {t.cta}
           </a>
@@ -170,9 +175,11 @@ function Index() {
         {menu && (
           <div className="mobile-menu mx-4 mb-4 rounded-2xl bg-cream p-6 shadow-xl lg:hidden">
             {t.nav.map((n) => <a key={n} href="#" className="block border-b border-border py-3 font-display text-xl">{n}</a>)}
+            {SHOW_LANGUAGES && (
             <div className="mt-4 flex gap-2 text-sm">
               {(["fr", "ar", "kab"] as Lang[]).map((k) => <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-2 ${lang === k ? "bg-saffron" : "bg-muted"}`}>{k === "fr" ? "FR" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}</button>)}
             </div>
+            )}
           </div>
         )}
       </header>
@@ -413,8 +420,13 @@ function Index() {
             <div className="mt-6 flex gap-3">{[Facebook, Instagram, Youtube].map((I, k) => <a key={k} href="#" className="social-link grid h-11 w-11 place-items-center rounded-full border border-cream/20 transition hover:bg-saffron hover:text-night"><I className="h-4 w-4" strokeWidth={1.5} /></a>)}</div>
           </div>
           <div><div className="font-semibold text-saffron">{tr("Liens")}</div><ul className="mt-3 space-y-2 text-sm text-cream/80">{t.nav.map((n) => <li key={n}><a href="#" className="hover:text-saffron">{n}</a></li>)}</ul></div>
-          <div><div className="font-semibold text-saffron">{tr("Langue")}</div>
-            <div className="mt-3 flex flex-wrap gap-2 text-sm">{(["fr", "ar", "kab"] as Lang[]).map((k) => <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-1.5 ${lang === k ? "bg-saffron text-night" : "border border-cream/20"}`}>{k === "fr" ? "FR" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}</button>)}</div>
+          <div>
+            {SHOW_LANGUAGES && (
+              <>
+                <div className="font-semibold text-saffron">{tr("Langue")}</div>
+                <div className="mt-3 flex flex-wrap gap-2 text-sm">{(["fr", "ar", "kab"] as Lang[]).map((k) => <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-1.5 ${lang === k ? "bg-saffron text-night" : "border border-cream/20"}`}>{k === "fr" ? "FR" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}</button>)}</div>
+              </>
+            )}
             <ul className="mt-6 space-y-2 text-sm text-cream/60"><li><a href="#">{tr("Mentions légales")}</a></li><li><a href="#">{tr("Politique de confidentialité")}</a></li></ul>
           </div>
         </div>
