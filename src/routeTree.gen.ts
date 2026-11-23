@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActualitesRouteImport } from './routes/actualites'
+import { Route as DecouvrirRouteImport } from './routes/decouvrir'
+import { Route as DemarchesRouteImport } from './routes/demarches'
+import { Route as MarchesPublicsRouteImport } from './routes/marches-publics'
+import { Route as SignalerRouteImport } from './routes/signaler'
+import { Route as SuivreRouteImport } from './routes/suivre'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActualitesRoute = ActualitesRouteImport.update({
+  id: '/actualites',
+  path: '/actualites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DecouvrirRoute = DecouvrirRouteImport.update({
+  id: '/decouvrir',
+  path: '/decouvrir',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemarchesRoute = DemarchesRouteImport.update({
+  id: '/demarches',
+  path: '/demarches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarchesPublicsRoute = MarchesPublicsRouteImport.update({
+  id: '/marches-publics',
+  path: '/marches-publics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignalerRoute = SignalerRouteImport.update({
+  id: '/signaler',
+  path: '/signaler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuivreRoute = SuivreRouteImport.update({
+  id: '/suivre',
+  path: '/suivre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/actualites': typeof ActualitesRoute
+  '/decouvrir': typeof DecouvrirRoute
+  '/demarches': typeof DemarchesRoute
+  '/marches-publics': typeof MarchesPublicsRoute
+  '/signaler': typeof SignalerRoute
+  '/suivre': typeof SuivreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/actualites': typeof ActualitesRoute
+  '/decouvrir': typeof DecouvrirRoute
+  '/demarches': typeof DemarchesRoute
+  '/marches-publics': typeof MarchesPublicsRoute
+  '/signaler': typeof SignalerRoute
+  '/suivre': typeof SuivreRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/actualites': typeof ActualitesRoute
+  '/decouvrir': typeof DecouvrirRoute
+  '/demarches': typeof DemarchesRoute
+  '/marches-publics': typeof MarchesPublicsRoute
+  '/signaler': typeof SignalerRoute
+  '/suivre': typeof SuivreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/actualites'
+    | '/decouvrir'
+    | '/demarches'
+    | '/marches-publics'
+    | '/signaler'
+    | '/suivre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/actualites'
+    | '/decouvrir'
+    | '/demarches'
+    | '/marches-publics'
+    | '/signaler'
+    | '/suivre'
+  id:
+    | '__root__'
+    | '/'
+    | '/actualites'
+    | '/decouvrir'
+    | '/demarches'
+    | '/marches-publics'
+    | '/signaler'
+    | '/suivre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActualitesRoute: typeof ActualitesRoute
+  DecouvrirRoute: typeof DecouvrirRoute
+  DemarchesRoute: typeof DemarchesRoute
+  MarchesPublicsRoute: typeof MarchesPublicsRoute
+  SignalerRoute: typeof SignalerRoute
+  SuivreRoute: typeof SuivreRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/actualites': {
+      id: '/actualites'
+      path: '/actualites'
+      fullPath: '/actualites'
+      preLoaderRoute: typeof ActualitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/decouvrir': {
+      id: '/decouvrir'
+      path: '/decouvrir'
+      fullPath: '/decouvrir'
+      preLoaderRoute: typeof DecouvrirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demarches': {
+      id: '/demarches'
+      path: '/demarches'
+      fullPath: '/demarches'
+      preLoaderRoute: typeof DemarchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marches-publics': {
+      id: '/marches-publics'
+      path: '/marches-publics'
+      fullPath: '/marches-publics'
+      preLoaderRoute: typeof MarchesPublicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signaler': {
+      id: '/signaler'
+      path: '/signaler'
+      fullPath: '/signaler'
+      preLoaderRoute: typeof SignalerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suivre': {
+      id: '/suivre'
+      path: '/suivre'
+      fullPath: '/suivre'
+      preLoaderRoute: typeof SuivreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActualitesRoute: ActualitesRoute,
+  DecouvrirRoute: DecouvrirRoute,
+  DemarchesRoute: DemarchesRoute,
+  MarchesPublicsRoute: MarchesPublicsRoute,
+  SignalerRoute: SignalerRoute,
+  SuivreRoute: SuivreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

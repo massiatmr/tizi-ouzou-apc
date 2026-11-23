@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePageMotion } from "@/hooks/use-page-motion";
 import { tifinagh } from "@/lib/tifinagh";
@@ -39,6 +39,13 @@ export const Route = createFileRoute("/")({
 });
 
 type Lang = "fr" | "ar" | "kab";
+
+const NAV_LINKS = [
+  { label: "Démarches", to: "/demarches" },
+  { label: "Marchés publics", to: "/marches-publics" },
+  { label: "Actualités", to: "/actualites" },
+  { label: "Découvrir", to: "/decouvrir" },
+] as const;
 const T = {
   fr: { brand: "APC de Tizi Ouzou", nav: ["Démarches", "Marchés publics", "Actualités", "Découvrir"], report: "Signaler un problème", cta: "Je participe", proc: "Faire une démarche",
     kicker: "Plateforme digitale de l'Assemblée Populaire Communale · Tizi Ouzou", title1: "Bâtir, préserver et partager :", title2: "construisons notre commune ensemble.", sub: "Une ville fière de ses racines, tournée vers demain. Ensemble, faisons grandir une Tizi Ouzou plus vivante, plus verte et plus solidaire.", search: "Que cherchez-vous ? Acte de naissance, permis…",
@@ -129,7 +136,7 @@ function Index() {
             </div>
           </a>
           <nav className={`ms-auto hidden items-center gap-7 text-sm font-semibold lg:flex ${scrolled ? "text-night" : "text-cream"}`}>
-            {t.nav.map((n) => <a key={n} href="#" className="relative after:absolute after:-bottom-1 after:start-0 after:h-0.5 after:w-0 after:bg-saffron after:transition-all hover:after:w-full">{n}</a>)}
+            {NAV_LINKS.map((n) => <Link key={n.to} to={n.to} className="relative after:absolute after:-bottom-1 after:start-0 after:h-0.5 after:w-0 after:bg-saffron after:transition-all hover:after:w-full">{n.label}</Link>)}
           </nav>
           {SHOW_LANGUAGES && (
           <div className="relative ms-auto hidden md:block lg:ms-0">
@@ -165,16 +172,16 @@ function Index() {
             )}
           </div>
           )}
-          <a href="#signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
+          <Link to="/signaler" className="motion-cta hidden items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-bold text-night transition hover:-translate-y-0.5 hover:shadow-lg sm:flex">
             <Lightbulb className="h-4 w-4" strokeWidth={1.5} /> {t.cta}
-          </a>
+          </Link>
           <Button variant="ghost" size="icon" onClick={() => setMenu(!menu)} className={`ms-auto shrink-0 hover:bg-cream/10 lg:hidden ${scrolled ? "text-night" : "text-cream"}`} aria-label={tr("Menu")} aria-expanded={menu}>
             {menu ? <X /> : <Menu />}
           </Button>
         </div>
         {menu && (
           <div className="mobile-menu mx-4 mb-4 rounded-2xl bg-cream p-6 shadow-xl lg:hidden">
-            {t.nav.map((n) => <a key={n} href="#" className="block border-b border-border py-3 font-display text-xl">{n}</a>)}
+            {NAV_LINKS.map((n) => <Link key={n.to} to={n.to} className="block border-b border-border py-3 font-display text-xl">{n.label}</Link>)}
             {SHOW_LANGUAGES && (
             <div className="mt-4 flex gap-2 text-sm">
               {(["fr", "ar", "kab"] as Lang[]).map((k) => <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-2 ${lang === k ? "bg-saffron" : "bg-muted"}`}>{k === "fr" ? "FR" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}</button>)}
@@ -206,8 +213,8 @@ function Index() {
               <input aria-label={t.search} className="min-w-0 w-full bg-transparent text-base text-night outline-none placeholder:text-muted-foreground" placeholder={t.search} />
             </label>
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
-              <Button asChild className="motion-cta h-auto min-h-12 whitespace-normal rounded-full bg-saffron px-3 py-2 text-center text-xs font-bold leading-snug text-night hover:bg-saffron/90 sm:px-6 sm:py-4 sm:text-base"><a href="#signaler">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a></Button>
-              <Button asChild variant="outline" className="h-auto min-h-12 whitespace-normal rounded-full border-cream/50 bg-transparent px-3 py-2 text-center text-xs font-bold leading-snug text-cream backdrop-blur hover:bg-cream hover:text-night sm:px-6 sm:py-4 sm:text-base"><a href="#demarches">{t.proc}</a></Button>
+              <Button asChild className="motion-cta h-auto min-h-12 whitespace-normal rounded-full bg-saffron px-3 py-2 text-center text-xs font-bold leading-snug text-night hover:bg-saffron/90 sm:px-6 sm:py-4 sm:text-base"><Link to="/signaler">{t.report} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></Link></Button>
+              <Button asChild variant="outline" className="h-auto min-h-12 whitespace-normal rounded-full border-cream/50 bg-transparent px-3 py-2 text-center text-xs font-bold leading-snug text-cream backdrop-blur hover:bg-cream hover:text-night sm:px-6 sm:py-4 sm:text-base"><Link to="/demarches">{t.proc}</Link></Button>
             </div>
           </div>
           <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-cream/80 sm:mt-6 sm:block">
@@ -231,13 +238,13 @@ function Index() {
         <SectionTitle kicker={t.quick} title={tr("Tout ce dont vous avez besoin, en un geste.")} />
         <div className="grid auto-rows-[220px] gap-4 md:grid-cols-4">
           {[
-            { t: "Signaler un problème", d: "Voirie, éclairage, propreté", i: AlertTriangle, img: rue, c: "md:col-span-2 md:row-span-2" },
-            { t: "Mes démarches", d: "État civil, urbanisme", i: FileText, img: mairie, c: "md:col-span-2" },
-            { t: "Marchés publics", d: "Avis & cahiers des charges", i: Gavel, img: null, c: "bg-leaf text-night" },
-            { t: "Actualités", d: "La vie de la commune", i: Newspaper, img: null, c: "bg-saffron text-night" },
-            { t: "Découvrir Tizi Ouzou", d: "Patrimoine & paysages", i: Compass, img: village, c: "md:col-span-2" },
+            { t: "Signaler un problème", d: "Voirie, éclairage, propreté", i: AlertTriangle, img: rue, c: "md:col-span-2 md:row-span-2", to: "/signaler" as const },
+            { t: "Mes démarches", d: "État civil, urbanisme", i: FileText, img: mairie, c: "md:col-span-2", to: "/demarches" as const },
+            { t: "Marchés publics", d: "Avis & cahiers des charges", i: Gavel, img: null, c: "bg-leaf text-night", to: "/marches-publics" as const },
+            { t: "Actualités", d: "La vie de la commune", i: Newspaper, img: null, c: "bg-saffron text-night", to: "/actualites" as const },
+            { t: "Découvrir Tizi Ouzou", d: "Patrimoine & paysages", i: Compass, img: village, c: "md:col-span-2", to: "/decouvrir" as const },
           ].map((b, k) => (
-            <a key={k} href="#" className={`reveal motion-card group relative overflow-hidden rounded-[1.75rem] p-6 ${b.c} ${b.img ? "text-cream" : ""}`} style={{ transitionDelay: `${k * 80}ms` }}>
+            <Link key={k} to={b.to} className={`reveal motion-card group relative overflow-hidden rounded-[1.75rem] p-6 ${b.c} ${b.img ? "text-cream" : ""}`} style={{ transitionDelay: `${k * 80}ms` }}>
               {b.img && <><img src={b.img} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-[1.2s] group-hover:scale-110" /><div className="absolute inset-0 bg-gradient-to-t from-night/90 to-night/10" /></>}
               <div className="relative flex h-full flex-col justify-between">
                 <b.i className="h-8 w-8" strokeWidth={1.25} />
@@ -247,7 +254,7 @@ function Index() {
                 </div>
               </div>
               <ArrowUpRight className="absolute end-6 top-6 h-6 w-6 transition group-hover:rotate-45" strokeWidth={1.5} />
-            </a>
+            </Link>
           ))}
           <div className="reveal relative flex flex-col justify-between overflow-hidden rounded-[1.75rem] bg-night p-6 text-cream md:col-span-2">
             <div className="absolute inset-0 kabyle-dots opacity-20" />
@@ -256,7 +263,7 @@ function Index() {
               <h3 className="font-display text-2xl">{tr("Suivre ma demande")}</h3>
               <div className="mt-3 flex gap-2">
                 <input placeholder={tr("N° de suivi, ex. TZO-2026-04817")} className="w-full rounded-full bg-cream/10 px-5 py-3 text-sm outline-none ring-1 ring-cream/20 placeholder:text-cream/50 focus:ring-saffron" />
-                <button className="rounded-full bg-saffron px-5 font-bold text-night">{tr("OK")}</button>
+                <Link to="/suivre" className="grid place-items-center rounded-full bg-saffron px-5 font-bold text-night">{tr("OK")}</Link>
               </div>
             </div>
           </div>
@@ -275,11 +282,11 @@ function Index() {
               {[[Trash2, "Propreté"], [Lightbulb, "Éclairage public"], [Construction, "Voirie"], [ScrollText, "État civil"], [Trees, "Espaces verts"], [MoreHorizontal, "Autres"]].map(([I, l], k) => {
                 const Icon = I as typeof Trash2;
                 return (
-                  <button key={k} className="reveal group flex items-center gap-4 rounded-2xl border border-cream/15 p-5 text-start transition hover:border-saffron hover:bg-cream/5" style={{ transitionDelay: `${k * 70}ms` }}>
+                  <Link key={k} to="/signaler" className="reveal group flex items-center gap-4 rounded-2xl border border-cream/15 p-5 text-start transition hover:border-saffron hover:bg-cream/5" style={{ transitionDelay: `${k * 70}ms` }}>
                     <span className="grid h-12 w-12 place-items-center rounded-full bg-cream/10 transition group-hover:bg-saffron group-hover:text-night"><Icon className="h-5 w-5" strokeWidth={1.5} /></span>
                     <span className="text-lg font-semibold">{tr(l as string)}</span>
                     <ArrowRight className="ms-auto h-4 w-4 opacity-0 transition group-hover:opacity-100 rtl:rotate-180" />
-                  </button>
+                  </Link>
                 );
               })}
             </div>
@@ -338,11 +345,11 @@ function Index() {
           <SectionTitle kicker={t.proc} title={t.demarches} />
           <div className="grid border-t border-night/15 md:grid-cols-2">
             {["Extrait d'acte de naissance (S12)", "Certificat de résidence", "Fiche familiale d'état civil", "Légalisation de signature", "Permis de construire", "Inscription sur les listes électorales"].map((d, k) => (
-              <a key={d} href="#" className="reveal group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 border-b border-night/15 py-7 md:odd:pe-10 md:even:ps-10 md:even:border-s">
+              <Link key={d} to="/demarches" className="reveal group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 border-b border-night/15 py-7 md:odd:pe-10 md:even:ps-10 md:even:border-s">
                 <span className="font-display text-xl text-clay">0{k + 1}</span>
                 <span className="min-w-0 flex-1 font-display text-2xl transition group-hover:translate-x-2 rtl:group-hover:-translate-x-2">{tr(d)}</span>
                 <span className="col-start-2 flex items-center gap-2 text-sm font-bold text-olive">{tr("Voir les étapes")} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1 rtl:rotate-180" /></span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -354,7 +361,7 @@ function Index() {
         <div className="mx-auto max-w-7xl px-5">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionTitle kicker={tr("Découvrir")} title={t.discover} light />
-            <a href="#" className="reveal mb-10 flex items-center gap-2 rounded-full bg-saffron px-6 py-4 font-bold text-night transition hover:-translate-y-1">{t.explore} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></a>
+            <Link to="/decouvrir" className="reveal mb-10 flex items-center gap-2 rounded-full bg-saffron px-6 py-4 font-bold text-night transition hover:-translate-y-1">{t.explore} <ArrowRight className="h-4 w-4 rtl:rotate-180" /></Link>
           </div>
           <div className="grid auto-rows-[180px] grid-cols-2 gap-4 md:auto-rows-[220px] md:grid-cols-4">
             {[
@@ -375,7 +382,7 @@ function Index() {
       <section className="mx-auto max-w-7xl px-5 py-24">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionTitle kicker={tr("Transparence")} title={t.markets} />
-          <a href="#" className="mb-10 font-bold text-olive underline-offset-4 hover:underline">{tr("Voir tous les marchés →")}</a>
+          <Link to="/marches-publics" className="mb-10 font-bold text-olive underline-offset-4 hover:underline">{tr("Voir tous les marchés →")}</Link>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {[["AO n°41/2026", "Réhabilitation de l'éclairage public — Nouvelle-Ville", "20 nov. 2026"], ["AO n°39/2026", "Aménagement des espaces verts — Boulevard Stiti", "27 nov. 2026"], ["AO n°38/2026", "Acquisition de bacs de collecte des déchets", "03 déc. 2026"], ["Consultation n°12", "Travaux de voirie — Quartier Les Genêts", "10 déc. 2026"]].map(([n, tt, d], k) => (
@@ -419,7 +426,7 @@ function Index() {
             <p className="mt-4 max-w-sm text-sm text-cream/70">{tr("Assemblée Populaire Communale de Tizi Ouzou — au service des citoyennes et citoyens.")}</p>
             <div className="mt-6 flex gap-3">{[Facebook, Instagram, Youtube].map((I, k) => <a key={k} href="#" className="social-link grid h-11 w-11 place-items-center rounded-full border border-cream/20 transition hover:bg-saffron hover:text-night"><I className="h-4 w-4" strokeWidth={1.5} /></a>)}</div>
           </div>
-          <div><div className="font-semibold text-saffron">{tr("Liens")}</div><ul className="mt-3 space-y-2 text-sm text-cream/80">{t.nav.map((n) => <li key={n}><a href="#" className="hover:text-saffron">{n}</a></li>)}</ul></div>
+          <div><div className="font-semibold text-saffron">{tr("Liens")}</div><ul className="mt-3 space-y-2 text-sm text-cream/80">{NAV_LINKS.map((n) => <li key={n.to}><Link to={n.to} className="hover:text-saffron">{n.label}</Link></li>)}<li><Link to="/signaler" className="hover:text-saffron">Signaler</Link></li><li><Link to="/suivre" className="hover:text-saffron">Suivre</Link></li></ul></div>
           <div>
             {SHOW_LANGUAGES && (
               <>
@@ -427,7 +434,7 @@ function Index() {
                 <div className="mt-3 flex flex-wrap gap-2 text-sm">{(["fr", "ar", "kab"] as Lang[]).map((k) => <button key={k} onClick={() => setLang(k)} className={`rounded-full px-3 py-1.5 ${lang === k ? "bg-saffron text-night" : "border border-cream/20"}`}>{k === "fr" ? "FR" : k === "ar" ? "العربية" : "ⵜⴰⵎⴰⵣⵉⵖⵜ"}</button>)}</div>
               </>
             )}
-            <ul className="mt-6 space-y-2 text-sm text-cream/60"><li><a href="#">{tr("Mentions légales")}</a></li><li><a href="#">{tr("Politique de confidentialité")}</a></li></ul>
+            <ul className="mt-6 space-y-2 text-sm text-cream/60"><li><a href="/signaler">{tr("Mentions légales")}</a></li><li><a href="/signaler">{tr("Politique de confidentialité")}</a></li></ul>
           </div>
         </div>
         <div className="border-t border-cream/10 py-6 text-center text-xs text-cream/50">{tr("© 2026 APC de Tizi Ouzou · ⵣ")}</div>
@@ -438,13 +445,13 @@ function Index() {
 
 function Tile({ img, t, s, c, delay }: { img: string; t: string; s: string; c: string; delay: number }) {
   return (
-    <a href="#" className={`reveal motion-card gallery-tile group relative overflow-hidden rounded-[1.5rem] transition-transform duration-300 ${c}`} style={{ transitionDelay: `${delay}ms` }}>
+    <Link to="/decouvrir" className={`reveal motion-card gallery-tile group relative overflow-hidden rounded-[1.5rem] transition-transform duration-300 ${c}`} style={{ transitionDelay: `${delay}ms` }}>
       <img src={img} alt={t} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-[1.2s] group-hover:scale-110" />
       <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-transparent to-transparent opacity-80 transition group-hover:opacity-100" />
       <div className="gallery-caption absolute bottom-0 p-5">
         <div className="text-[11px] font-bold uppercase tracking-[0.25em] text-saffron">{s}</div>
         <div className="font-display text-xl md:text-2xl">{t}</div>
       </div>
-    </a>
+    </Link>
   );
 }
