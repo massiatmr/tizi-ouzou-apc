@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import {
-  Search, FileText, ArrowRight, Clock, MapPin, FileCheck, Download,
+  Search, FileText, ArrowRight, Clock, MapPin, FileCheck,
   ChevronDown, HelpCircle, UserCheck, ClipboardList, PackageCheck,
-  Baby, Heart, Globe, Car, IdCard, Vote, Home, ShieldCheck, Building2,
-  ScrollText, FileSignature, Users,
+  Baby, Heart, IdCard, FileSignature, Building2, ScrollText, Users,
+  Download, Phone,
 } from "lucide-react";
 import { PageLayout } from "@/components/site-layout";
 
@@ -12,44 +12,53 @@ export const Route = createFileRoute("/demarches")({
   head: () => ({
     meta: [
       { title: "Démarches administratives — APC de Tizi Ouzou" },
-      { name: "description", content: "Consultez les pièces à fournir, les délais indicatifs, les modalités de dépôt et les formulaires téléchargeables pour les 32 démarches de la commune de Tizi Ouzou." },
+      { name: "description", content: "Consultez les pièces à fournir, les délais indicatifs, les modalités de dépôt et les formulaires téléchargeables pour les démarches de la commune de Tizi Ouzou." },
     ],
   }),
   component: DemarchesPage,
 });
 
-type Categorie = "etat_civil" | "identite" | "certificats" | "famille" | "divers" | "formulaires";
+type Categorie = "etat_civil" | "identite" | "certificats" | "famille" | "urbanisme" | "divers";
 
 type Demarche = {
   id: string;
   titre: string;
   categorie: Categorie;
   description: string;
-  documents: string[];
-  etapes: string[];
   delai: string;
-  cout: string;
-  lieu: string;
-  formulaire?: boolean;
+  depot: string;
+  pieces: string[];
+  hasPdf?: boolean;
+  pdfLabel?: string;
+  extraPdfLabel?: string;
 };
 
 const CATEGORIES: { value: Categorie; label: string; icon: typeof FileText }[] = [
   { value: "etat_civil", label: "État civil", icon: Baby },
   { value: "identite", label: "Identité", icon: IdCard },
   { value: "certificats", label: "Certificats", icon: FileSignature },
-  { value: "famille", label: "Famille & autorisations", icon: Heart },
-  { value: "divers", label: "Divers administratifs", icon: Building2 },
-  { value: "formulaires", label: "Formulaires spécialisés", icon: ScrollText },
+  { value: "famille", label: "Famille", icon: Heart },
+  { value: "urbanisme", label: "Urbanisme / autorisations", icon: Building2 },
+  { value: "divers", label: "Divers", icon: ScrollText },
 ];
 
 const CAT_LABELS: Record<Categorie, string> = {
   etat_civil: "État civil",
   identite: "Identité",
   certificats: "Certificats",
-  famille: "Famille & autorisations",
-  divers: "Divers administratifs",
-  formulaires: "Formulaires spécialisés",
+  famille: "Famille",
+  urbanisme: "Urbanisme / autorisations",
+  divers: "Divers",
 };
+
+const PROCEDURES_PRIORITAIRES = [
+  { num: 1, titre: "Extrait de naissance 12S" },
+  { num: 2, titre: "Certificat de résidence" },
+  { num: 3, titre: "Carte nationale d'identité biométrique" },
+  { num: 4, titre: "Passeport" },
+  { num: 5, titre: "Acte de mariage" },
+  { num: 6, titre: "Acte de décès" },
+];
 
 const DEMARCHES: Demarche[] = [
   // État civil
@@ -58,55 +67,47 @@ const DEMARCHES: Demarche[] = [
     titre: "Extrait de naissance 12S",
     categorie: "etat_civil",
     description: "Document sécurisé requis pour les démarches d'identité biométrique et passeport.",
-    documents: ["Carte d'identité nationale du demandeur", "Date et lieu de naissance de l'intéressé", "Timbre fiscal (selon tarif en vigueur)"],
-    etapes: ["Se présenter au bureau d'état civil", "Remplir le formulaire S12", "Déposer les pièces requises", "Retrait du document"],
-    delai: "48 heures",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "immédiat à 24 h",
+    depot: "État civil APC",
+    pieces: ["Pièce d'identité du demandeur", "Nom, prénom, date et lieu de naissance", "Livret de famille (si disponible)"],
   },
   {
     id: "acte-mariage",
     titre: "Acte de mariage & mariage mixte",
     categorie: "etat_civil",
     description: "Extrait ou copie intégrale de l'acte de mariage établi par la commune de célébration.",
-    documents: ["Carte d'identité nationale", "Livret de famille (si disponible)", "Information sur la date et lieu du mariage"],
-    etapes: ["Se présenter au bureau d'état civil", "Indiquer la date et le lieu du mariage", "Retrait du document"],
-    delai: "48 heures",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "24 à 48 h",
+    depot: "Commune du mariage",
+    pieces: ["Pièce d'identité", "Noms des époux + date du mariage", "Livret de famille (si disponible)"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "acte-deces",
     titre: "Acte de décès",
     categorie: "etat_civil",
     description: "Document officiel attestant le décès d'une personne enregistrée auprès des services communaux.",
-    documents: ["Carte d'identité nationale du demandeur", "Information sur le défunt (date et lieu du décès)", "Pièce d'identité du défunt (si disponible)"],
-    etapes: ["Se présenter au bureau d'état civil", "Fournir les informations sur le défunt", "Retrait du document"],
-    delai: "24 à 48 heures",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "24 à 72 h",
+    depot: "État civil APC",
+    pieces: ["Pièce d'identité du demandeur", "Informations sur le défunt", "Certificat médical (déclaration)"],
   },
   {
     id: "fiche-familiale",
     titre: "Fiche familiale",
     categorie: "etat_civil",
     description: "Document synthétique de la composition familiale à jour dans les registres communaux.",
-    documents: ["Livret de famille", "Carte d'identité nationale du demandeur"],
-    etapes: ["Se présenter au bureau d'état civil", "Présenter le livret de famille", "Retrait du document"],
-    delai: "48 heures",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "24 h",
+    depot: "État civil APC",
+    pieces: ["Pièce d'identité du chef de famille", "Livret de famille", "Formulaire de demande signé"],
   },
   {
     id: "attestation-non-mariage",
     titre: "Attestation de non mariage",
     categorie: "etat_civil",
     description: "Attestation administrative certifiant la situation matrimoniale actuelle du demandeur.",
-    documents: ["Carte d'identité nationale", "Extrait de naissance 12S"],
-    etapes: ["Se présenter au bureau d'état civil", "Fournir l'extrait de naissance", "Retrait de l'attestation"],
-    delai: "72 heures",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "24 à 48 h",
+    depot: "État civil APC",
+    pieces: ["Pièce d'identité", "Extrait de naissance récent", "Formulaire de demande"],
   },
 
   // Identité
@@ -115,44 +116,42 @@ const DEMARCHES: Demarche[] = [
     titre: "Carte nationale d'identité biométrique",
     categorie: "identite",
     description: "Carte d'identification officielle valable 10 ans pour majeurs et 5 ans pour mineurs.",
-    documents: ["Extrait de naissance 12S", "Carte d'identité ancienne (si renouvellement)", "Justificatif de domicile", "Timbre fiscal", "Photo d'identité récente"],
-    etapes: ["Retirer le formulaire CNI au guichet", "Constituer le dossier avec les pièces requises", "Dépôt du dossier et prise d'empreintes", "Retrait de la carte après notification"],
-    delai: "30 à 60 jours",
-    cout: "Timbre fiscal",
-    lieu: "Service d'identité — Hôtel de ville",
+    delai: "variable selon Daïra",
+    depot: "Daïra / centre biométrique",
+    pieces: ["Acte de naissance 12S", "Certificat de résidence", "Photos biométriques + formulaire"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "passeport",
     titre: "Passeport",
     categorie: "identite",
     description: "Document de voyage biométrique délivré après instruction du dossier d'identité.",
-    documents: ["Extrait de naissance 12S", "Carte d'identité nationale", "Justificatif de domicile", "Timbre fiscal (tarif passeport)", "Photo d'identité récente", "Ancien passeport (si renouvellement)"],
-    etapes: ["Retirer le formulaire de passeport", "Constituer le dossier complet", "Dépôt au service d'identité", "Retrait du passeport après notification"],
-    delai: "30 à 60 jours",
-    cout: "Timbre fiscal (tarif passeport)",
-    lieu: "Service d'identité — Hôtel de ville",
+    delai: "selon instruction",
+    depot: "Daïra",
+    pieces: ["Acte de naissance 12S", "Carte d'identité en cours de validité", "Certificat de résidence et photos"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "permis-conduire",
     titre: "Permis de conduire",
     categorie: "identite",
     description: "Information sur les pièces à déposer pour demande, renouvellement ou duplicata.",
-    documents: ["Carte d'identité nationale", "Certificat médical (pour renouvellement)", "Ancien permis (si renouvellement ou duplicata)", "Photo d'identité", "Timbre fiscal"],
-    etapes: ["Se présenter au service compétent", "Déposer le dossier complet", "Suivre les instructions du service", "Retrait du permis"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Service de la circulation — Hôtel de ville",
+    delai: "variable",
+    depot: "service habilité",
+    pieces: ["Pièce d'identité", "Justificatifs administratifs requis", "Formulaire de demande"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "carte-electorale",
     titre: "Carte électorale",
     categorie: "identite",
     description: "Inscription, modification ou renouvellement de la carte électorale.",
-    documents: ["Carte d'identité nationale", "Justificatif de domicile", "Acte de naissance (pour première inscription)"],
-    etapes: ["Se présenter au service des élections", "Remplir le formulaire d'inscription", "Vérification et traitement", "Réception de la carte d'électeur"],
-    delai: "30 jours",
-    cout: "Gratuit",
-    lieu: "Service des élections — Hôtel de ville",
+    delai: "selon calendrier électoral",
+    depot: "guichet électoral APC",
+    pieces: ["Pièce d'identité", "Justificatif de résidence", "Formulaire d'inscription"],
   },
 
   // Certificats
@@ -161,57 +160,49 @@ const DEMARCHES: Demarche[] = [
     titre: "Certificat de résidence",
     categorie: "certificats",
     description: "Document attestant l'adresse de résidence pour les démarches d'identité et dossiers administratifs.",
-    documents: ["Carte d'identité nationale", "Justificatif de domicile (facture d'eau ou d'électricité)"],
-    etapes: ["Se présenter au bureau d'état civil", "Fournir les pièces justificatives", "Retrait le jour même"],
-    delai: "Immédiat",
-    cout: "Gratuit",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "immédiat à 24 h",
+    depot: "guichet APC",
+    pieces: ["Pièce d'identité", "Justificatif de domicile", "Attestation d'hébergement si nécessaire"],
   },
   {
     id: "certificat-individualite",
     titre: "Certificat d'individualité",
     categorie: "certificats",
     description: "Attestation utile en cas de divergence d'état civil ou d'homonymie dans un dossier.",
-    documents: ["Carte d'identité nationale", "Extrait de naissance 12S"],
-    etapes: ["Se présenter au bureau d'état civil", "Fournir les pièces justificatives", "Retrait du certificat"],
-    delai: "48 heures",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
+    delai: "24 à 48 h",
+    depot: "guichet APC",
+    pieces: ["Pièce d'identité", "Extraits d'état civil concernés", "Formulaire explicatif"],
   },
   {
     id: "procuration",
     titre: "Procuration",
     categorie: "certificats",
     description: "Formalité de mandatement avec légalisation de signature auprès du service administratif.",
-    documents: ["Carte d'identité nationale du mandant", "Carte d'identité nationale du mandataire", "Document de procuration rédigé", "Timbre fiscal"],
-    etapes: ["Se présenter en personne avec le mandataire", "Signer devant l'agent communal", "Retrait immédiat"],
-    delai: "Immédiat",
-    cout: "Timbre fiscal",
-    lieu: "Accueil de la mairie — Hôtel de ville",
+    delai: "immédiat",
+    depot: "guichet APC",
+    pieces: ["Pièces d'identité des parties", "Texte de procuration ou formulaire", "Présence du mandant"],
   },
 
-  // Famille / autorisations
+  // Famille
   {
     id: "sortie-mineurs",
     titre: "Sortie de mineurs à l'étranger",
     categorie: "famille",
     description: "Autorisation parentale requise pour le déplacement d'un mineur hors du territoire national.",
-    documents: ["Carte d'identité nationale du parent", "Extrait de naissance de l'enfant", "Passeport de l'enfant (si disponible)", "Timbre fiscal"],
-    etapes: ["Se présenter au service compétent", "Remplir le formulaire d'autorisation", "Déposer les pièces", "Retrait de l'autorisation"],
-    delai: "48 heures",
-    cout: "Timbre fiscal",
-    lieu: "Accueil de la mairie — Hôtel de ville",
+    delai: "24 à 48 h",
+    depot: "guichet APC",
+    pieces: ["Pièce d'identité du parent/tuteur", "Livret de famille", "Pièce d'identité du mineur"],
   },
   {
     id: "declaration-hebergement",
     titre: "Déclaration d'hébergement",
     categorie: "famille",
     description: "Attestation d'hébergement destinée aux dossiers administratifs nécessitant une adresse de référence.",
-    documents: ["Carte d'identité nationale de l'hébergeant", "Justificatif de domicile", "Carte d'identité de l'hébergé (si disponible)"],
-    etapes: ["Se présenter à l'accueil de la mairie", "Remplir la déclaration d'hébergement", "Signature devant l'agent communal", "Retrait immédiat"],
-    delai: "Immédiat",
-    cout: "Timbre fiscal",
-    lieu: "Accueil de la mairie — Hôtel de ville",
+    delai: "immédiat à 24 h",
+    depot: "guichet APC",
+    pieces: ["Pièce d'identité de l'hébergeant", "Justificatif de domicile", "Copie d'identité de la personne hébergée"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
 
   // Divers administratifs
@@ -220,215 +211,196 @@ const DEMARCHES: Demarche[] = [
     titre: "Service national",
     categorie: "divers",
     description: "Constitution de dossier, attestations et régularisation liées à la situation vis-à-vis du service national.",
-    documents: ["Carte d'identité nationale", "Extrait de naissance 12S", "Diplôme ou certificat de scolarité"],
-    etapes: ["Se présenter au service compétent", "Constituer le dossier", "Suivre les instructions du service"],
-    delai: "Selon procédure",
-    cout: "Gratuit",
-    lieu: "Service de l'accueil — Hôtel de ville",
+    delai: "selon instruction",
+    depot: "service concerné",
+    pieces: ["Pièce d'identité", "Acte de naissance", "Pièces complémentaires selon cas"],
   },
   {
     id: "immatriculation-vente-vehicule",
     titre: "Immatriculation et vente de véhicule",
     categorie: "divers",
     description: "Formalités administratives de mutation, vente et mise à jour des documents d'immatriculation.",
-    documents: ["Carte d'identité nationale", "Carte grise du véhicule", "Contrat de vente ou de cession", "Timbre fiscal"],
-    etapes: ["Se présenter au service de la circulation", "Déposer le dossier complet", "Retrait des documents mis à jour"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Service de la circulation — Hôtel de ville",
+    delai: "variable",
+    depot: "service habilité",
+    pieces: ["Carte grise et pièces du véhicule", "Pièces d'identité des parties", "Actes de vente / formulaires"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
+    extraPdfLabel: "Déclaration de vente",
   },
   {
     id: "visa-prolongation",
     titre: "Demande de visa & prolongation de visa",
     categorie: "divers",
     description: "Orientation sur les pièces administratives locales requises pour les dossiers de visa.",
-    documents: ["Passeport en cours de validité", "Justificatif de domicile", "Motif de la demande de visa"],
-    etapes: ["Se présenter au service compétent", "Constituer le dossier", "Suivre les instructions du service"],
-    delai: "Selon procédure",
-    cout: "Selon tarif",
-    lieu: "Accueil de la mairie — Hôtel de ville",
+    delai: "selon instruction",
+    depot: "service compétent",
+    pieces: ["Pièce d'identité et justificatifs de séjour", "Documents du dossier de voyage", "Formulaire de demande"],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
+    extraPdfLabel: "Prolongation de visa",
   },
 
   // Formulaires spécialisés
   {
     id: "commercant-non-sedentaire",
     titre: "Commerçant non sédentaire",
-    categorie: "formulaires",
+    categorie: "divers",
     description: "Dossier de demande d'autorisation pour l'exercice de commerce ambulant.",
-    documents: ["Carte d'identité nationale", "Registre du commerce (si existant)", "Casier judiciaire", "Timbre fiscal"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service compétent"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
   },
   {
     id: "carte-commercant-etranger",
     titre: "Carte commerçant étranger",
-    categorie: "formulaires",
+    categorie: "divers",
     description: "Demande et constitution du dossier administratif lié au statut de commerçant étranger.",
-    documents: ["Passeport en cours de validité", "Registre du commerce", "Casier judiciaire", "Timbre fiscal"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service compétent"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "logement-rural",
     titre: "Logement rural",
-    categorie: "formulaires",
+    categorie: "urbanisme",
     description: "Formulaire de demande ou de suivi administratif lié aux dispositifs de logement rural.",
-    documents: ["Carte d'identité nationale", "Acte de propriété du terrain", "Plan de situation"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service de l'urbanisme"],
-    delai: "Selon procédure",
-    cout: "Gratuit",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
   },
   {
     id: "licence-reunion-publique",
-    titre: "Licence pour organiser une réunion publique",
-    categorie: "formulaires",
+    titre: "Demander une licence pour organiser une réunion publique",
+    categorie: "urbanisme",
     description: "Demande préalable pour la tenue d'une réunion publique dans les espaces autorisés.",
-    documents: ["Carte d'identité nationale du demandeur", "Note descriptive de la réunion", "Date et lieu envisagés"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt à l'accueil de la mairie"],
-    delai: "15 jours",
-    cout: "Gratuit",
-    lieu: "Accueil de la mairie — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "certificat-morcellement",
-    titre: "Certificat de morcellement",
-    categorie: "formulaires",
+    titre: "Demande certificat de morcellement",
+    categorie: "urbanisme",
     description: "Formulaire technique pour les opérations de division foncière et vérification administrative.",
-    documents: ["Acte de propriété", "Plan du terrain", "Carte d'identité nationale", "Plan de morcellement"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier technique", "Dépôt au service de l'urbanisme"],
-    delai: "Selon procédure",
-    cout: "Selon barème",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "permis-demolir",
-    titre: "Permis de démolir",
-    categorie: "formulaires",
+    titre: "Demande permis de démolir",
+    categorie: "urbanisme",
     description: "Dossier de demande d'autorisation de démolition selon la réglementation locale en vigueur.",
-    documents: ["Acte de propriété", "Plan du bâtiment à démolir", "Carte d'identité nationale", "Note justificative"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service de l'urbanisme"],
-    delai: "1 à 2 mois",
-    cout: "Selon barème",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "permis-lotir",
-    titre: "Permis de lotir",
-    categorie: "formulaires",
+    titre: "Demande permis de lotir",
+    categorie: "urbanisme",
     description: "Demande d'autorisation de lotissement pour projets d'aménagement foncier.",
-    documents: ["Acte de propriété du terrain", "Plan de lotissement", "Plan de situation", "Carte d'identité nationale", "Étude technique"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier technique", "Dépôt au service de l'urbanisme", "Enquête publique si nécessaire"],
-    delai: "2 à 3 mois",
-    cout: "Selon barème",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "etablissement-loisirs",
-    titre: "Exploitation d'établissement de loisirs et spectacles",
-    categorie: "formulaires",
+    titre: "Exploitation établissement de loisirs et spectacles",
+    categorie: "divers",
     description: "Constitution du dossier administratif pour l'exploitation d'un établissement de loisirs.",
-    documents: ["Carte d'identité nationale", "Registre du commerce", "Plan des locaux", "Règlement intérieur de l'établissement"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service compétent"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Service de l'urbanisme — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "autorisation-mariage-mixte",
     titre: "Autorisation de mariage mixte",
-    categorie: "formulaires",
+    categorie: "famille",
     description: "Formulaire officiel de demande d'autorisation administrative pour mariage mixte.",
-    documents: ["Carte d'identité nationale", "Passeport du conjoint étranger", "Extrait de naissance 12S", "Certificat de célibat du conjoint étranger"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au bureau d'état civil"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Bureau d'état civil — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "passeport-urgence",
     titre: "Passeport d'urgence",
-    categorie: "formulaires",
+    categorie: "identite",
     description: "Formulaire dédié aux demandes de passeport d'urgence dans les cas prévus par la réglementation.",
-    documents: ["Carte d'identité nationale", "Justificatif de l'urgence (billet, document officiel)", "Photo d'identité", "Timbre fiscal"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier avec justificatif d'urgence", "Dépôt au service d'identité"],
-    delai: "48 à 72 heures",
-    cout: "Timbre fiscal (tarif urgence)",
-    lieu: "Service d'identité — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "formulaire-passeport-cni",
     titre: "Formulaire passeport & CNI biométriques",
-    categorie: "formulaires",
+    categorie: "identite",
     description: "Imprimé officiel de demande du passeport biométrique et de la carte nationale d'identité.",
-    documents: ["Extrait de naissance 12S", "Carte d'identité nationale", "Justificatif de domicile", "Timbre fiscal"],
-    etapes: ["Retirer le formulaire au guichet", "Remplir les rubriques requises", "Dépôt avec les pièces justificatives"],
-    delai: "30 à 60 jours",
-    cout: "Timbre fiscal",
-    lieu: "Service d'identité — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "cni-detenteurs-passeport",
     titre: "CNI biométrique (détenteurs passeport)",
-    categorie: "formulaires",
+    categorie: "identite",
     description: "Formulaire CNI biométrique pour les citoyens déjà titulaires d'un passeport biométrique.",
-    documents: ["Passeport biométrique en cours de validité", "Extrait de naissance 12S", "Justificatif de domicile"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service d'identité"],
-    delai: "30 à 60 jours",
-    cout: "Timbre fiscal",
-    lieu: "Service d'identité — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "certificat-medical-permis",
     titre: "Certificat médical (permis de conduire)",
-    categorie: "formulaires",
+    categorie: "identite",
     description: "Certificat médical exigé dans les dossiers de demande ou renouvellement du permis de conduire.",
-    documents: ["Carte d'identité nationale", "Permis de conduire (si renouvellement)", "Photo d'identité"],
-    etapes: ["Retirer le formulaire", "Passer la visite médicale", "Dépôt du certificat au service compétent"],
-    delai: "Selon procédure",
-    cout: "Frais médicaux",
-    lieu: "Service de la circulation — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "declaration-vente-vehicule",
     titre: "Déclaration de vente de véhicule",
-    categorie: "formulaires",
+    categorie: "divers",
     description: "Formulaire de déclaration de vente pour mutation administrative d'un véhicule.",
-    documents: ["Carte d'identité nationale", "Carte grise du véhicule", "Contrat de vente"],
-    etapes: ["Retirer le formulaire", "Remplir la déclaration de vente", "Dépôt au service de la circulation"],
-    delai: "Immédiat",
-    cout: "Timbre fiscal",
-    lieu: "Service de la circulation — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
   {
     id: "prolongation-visa-sejour",
     titre: "Prolongation de visa / séjour",
-    categorie: "formulaires",
+    categorie: "divers",
     description: "Formulaire d'extension de visa ou de séjour pour usagers étrangers.",
-    documents: ["Passeport en cours de validité", "Justificatif de domicile", "Motif de la prolongation", "Timbre fiscal"],
-    etapes: ["Retirer le formulaire", "Constituer le dossier", "Dépôt au service compétent"],
-    delai: "Selon procédure",
-    cout: "Timbre fiscal",
-    lieu: "Accueil de la mairie — Hôtel de ville",
-    formulaire: true,
+    delai: "",
+    depot: "",
+    pieces: [],
+    hasPdf: true,
+    pdfLabel: "Télécharger le formulaire",
   },
 ];
 
@@ -439,11 +411,10 @@ const PARCOURS = [
 ];
 
 const FAQ = [
-  { q: "Où retirer les formulaires administratifs ?", a: "Tous les formulaires sont disponibles aux guichets concernés de l'Hôtel de ville, aux horaires d'ouverture : dimanche à jeudi, 8h00–16h30." },
-  { q: "Puis-je déposer une demande pour un tiers ?", a: "Oui, muni d'une procuration légalisée et d'une copie de la pièce d'identité du mandant, vous pouvez déposer une demande au nom d'un tiers." },
-  { q: "Comment connaître l'état d'avancement de ma demande ?", a: "Vous pouvez suivre l'état de votre signalement ou demande via la page « Suivre ma demande » avec votre numéro de suivi." },
-  { q: "Que faire si un document me manque ?", a: "Rapprochez-vous du guichet compétent : nos agents vous orienteront sur les alternatives possibles selon votre situation." },
-  { q: "Les démarches sont-elles payantes ?", a: "La plupart des démarches nécessitent un timbre fiscal. Certaines attestations sont gratuites. Le coût est indiqué pour chaque démarche dans le catalogue." },
+  { q: "Peut-on effectuer une demande pour un proche ?", a: "Oui. Une procuration signée, un justificatif du lien familial et une copie de pièce d'identité sont généralement requis selon la démarche." },
+  { q: "Les démarches sont-elles toutes gratuites ?", a: "Certaines démarches sont gratuites, d'autres nécessitent un timbre fiscal. Le détail est indiqué pour chaque démarche dans le catalogue." },
+  { q: "Peut-on préparer certaines démarches en ligne ?", a: "Les formulaires téléchargeables peuvent être remplis à l'avance. Le dépôt physique au guichet reste nécessaire pour la plupart des démarches." },
+  { q: "Que faire si mon dossier est incomplet ?", a: "Rapprochez-vous du guichet compétent : nos agents vous orienteront sur les pièces manquantes et les alternatives possibles." },
 ];
 
 function DemarchesPage() {
@@ -471,49 +442,76 @@ function DemarchesPage() {
     return map;
   }, [filtered]);
 
+  const hasDetails = (d: Demarche) => d.pieces.length > 0 || d.delai || d.depot;
+
   return (
     <PageLayout pageTitle="Démarches administratives">
       <div className="mx-auto max-w-5xl px-5 pb-24">
         {/* Intro */}
         <p className="mb-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Consultez les pièces à fournir, les délais indicatifs, les modalités de dépôt et les formulaires téléchargeables pour les {DEMARCHES.length} démarches de la commune.
+          Consultez les pièces à fournir, les délais indicatifs, les modalités de dépôt et les formulaires téléchargeables.
         </p>
 
+        {/* Procédures les plus demandées */}
+        <section className="mb-12">
+          <h2 className="mb-5 font-display text-2xl text-night">Accès rapide aux démarches prioritaires</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {PROCEDURES_PRIORITAIRES.map((p) => {
+              const target = DEMARCHES.find((d) => d.titre === p.titre);
+              return (
+                <button
+                  key={p.num}
+                  onClick={() => {
+                    if (target) {
+                      setOpenId(target.id);
+                      setTimeout(() => {
+                        document.getElementById(`demarche-${target.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+                      }, 100);
+                    }
+                  }}
+                  className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4 text-start transition hover:border-saffron hover:shadow-sm"
+                >
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-saffron/20 font-display text-lg font-bold text-saffron">{p.num}</span>
+                  <span className="text-sm font-semibold text-night">{p.titre}</span>
+                  <ArrowRight className="ms-auto h-4 w-4 shrink-0 text-muted-foreground rtl:rotate-180" />
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
         {/* Search */}
-        <div className="mb-6 flex items-center gap-3 rounded-full bg-cream px-5 py-3.5 shadow-sm ring-1 ring-border">
+        <div className="mb-4 flex items-center gap-3 rounded-full bg-cream px-5 py-3.5 shadow-sm ring-1 ring-border">
           <Search className="h-5 w-5 shrink-0 text-olive" strokeWidth={1.5} />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher une démarche ou un formulaire…"
+            placeholder="Rechercher une démarche ou un formulaire"
             className="w-full bg-transparent text-night outline-none placeholder:text-muted-foreground"
           />
           {query && (
             <button onClick={() => setQuery("")} className="shrink-0 text-sm font-semibold text-clay hover:text-night">Effacer</button>
           )}
         </div>
+        <p className="mb-6 text-xs text-muted-foreground">Exemple : passeport, certificat, mineur, résidence…</p>
 
         {/* Category filters */}
-        <div className="mb-10 flex flex-wrap gap-2">
+        <div className="mb-8 flex flex-wrap gap-2">
           <button
             onClick={() => setCat("all")}
             className={`rounded-full px-4 py-2.5 text-sm font-semibold transition ${cat === "all" ? "bg-saffron text-night" : "bg-secondary text-muted-foreground hover:bg-saffron/20"}`}
           >
-            Toutes ({DEMARCHES.length})
+            Toutes
           </button>
-          {CATEGORIES.map((c) => {
-            const count = DEMARCHES.filter((d) => d.categorie === c.value).length;
-            return (
-              <button
-                key={c.value}
-                onClick={() => setCat(c.value)}
-                className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${cat === c.value ? "bg-saffron text-night" : "bg-secondary text-muted-foreground hover:bg-saffron/20"}`}
-              >
-                <c.icon className="h-4 w-4" strokeWidth={1.5} />
-                {c.label} ({count})
-              </button>
-            );
-          })}
+          {CATEGORIES.map((c) => (
+            <button
+              key={c.value}
+              onClick={() => setCat(c.value)}
+              className={`rounded-full px-4 py-2.5 text-sm font-semibold transition ${cat === c.value ? "bg-saffron text-night" : "bg-secondary text-muted-foreground hover:bg-saffron/20"}`}
+            >
+              {c.label}
+            </button>
+          ))}
         </div>
 
         {/* Results count */}
@@ -521,34 +519,81 @@ function DemarchesPage() {
           {filtered.length} résultat{filtered.length > 1 ? "s" : ""} affiché{filtered.length > 1 ? "s" : ""}
         </div>
 
-        {/* Grouped list */}
+        {/* Catalogue principal */}
         {cat === "all" && filtered.length > 0 ? (
           <div className="space-y-12">
-            {CATEGORIES.map((c) => {
-              const items = grouped.get(c.value);
-              if (!items || items.length === 0) return null;
+            <div>
+              <h3 className="mb-1 text-sm font-bold uppercase tracking-widest text-clay">Catalogue principal</h3>
+              <h4 className="mb-5 font-display text-2xl text-night">Catalogue des démarches</h4>
+              <div className="space-y-12">
+                {CATEGORIES.slice(0, 4).map((c) => {
+                  const items = grouped.get(c.value);
+                  if (!items || items.length === 0) return null;
+                  return (
+                    <section key={c.value}>
+                      <div className="mb-5 flex items-center gap-3">
+                        <div className="grid h-10 w-10 place-items-center rounded-xl bg-olive/10 text-olive">
+                          <c.icon className="h-5 w-5" strokeWidth={1.5} />
+                        </div>
+                        <h5 className="font-display text-xl text-night">{c.label}</h5>
+                      </div>
+                      <div className="space-y-4">
+                        {items.map((d) => (
+                          <DemarcheCard key={d.id} d={d} isOpen={openId === d.id} onToggle={() => setOpenId(openId === d.id ? null : d.id)} hasDetails={hasDetails(d)} />
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Divers administratifs */}
+            {(() => {
+              const items = grouped.get("divers")?.filter((d) => hasDetails(d)) ?? [];
+              if (items.length === 0) return null;
               return (
-                <section key={c.value}>
+                <section>
                   <div className="mb-5 flex items-center gap-3">
                     <div className="grid h-10 w-10 place-items-center rounded-xl bg-olive/10 text-olive">
-                      <c.icon className="h-5 w-5" strokeWidth={1.5} />
+                      <ScrollText className="h-5 w-5" strokeWidth={1.5} />
                     </div>
-                    <h3 className="font-display text-2xl text-night">{c.label}</h3>
-                    <span className="text-sm font-semibold text-muted-foreground">({items.length})</span>
+                    <h5 className="font-display text-xl text-night">Divers administratifs</h5>
                   </div>
                   <div className="space-y-4">
-                    {items.map((d, k) => (
-                      <DemarcheCard key={d.id} d={d} isOpen={openId === d.id} onToggle={() => setOpenId(openId === d.id ? null : d.id)} delay={k * 50} />
+                    {items.map((d) => (
+                      <DemarcheCard key={d.id} d={d} isOpen={openId === d.id} onToggle={() => setOpenId(openId === d.id ? null : d.id)} hasDetails />
                     ))}
                   </div>
                 </section>
               );
-            })}
+            })()}
+
+            {/* Formulaires spécialisés */}
+            {(() => {
+              const formItems = grouped.get("divers")?.filter((d) => !hasDetails(d)) ?? [];
+              const urbanismeItems = grouped.get("urbanisme") ?? [];
+              const familleForms = grouped.get("famille")?.filter((d) => !hasDetails(d)) ?? [];
+              const identiteForms = grouped.get("identite")?.filter((d) => !hasDetails(d)) ?? [];
+              const allForms = [...urbanismeItems, ...familleForms, ...identiteForms, ...formItems];
+              if (allForms.length === 0) return null;
+              return (
+                <section>
+                  <h3 className="mb-1 text-sm font-bold uppercase tracking-widest text-clay">Autres démarches</h3>
+                  <h4 className="mb-5 font-display text-2xl text-night">Formulaires spécialisés</h4>
+                  <div className="space-y-4">
+                    {allForms.map((d) => (
+                      <DemarcheCard key={d.id} d={d} isOpen={openId === d.id} onToggle={() => setOpenId(openId === d.id ? null : d.id)} hasDetails={false} />
+                    ))}
+                  </div>
+                </section>
+              );
+            })()}
           </div>
         ) : (
           <div className="space-y-4">
-            {filtered.map((d, k) => (
-              <DemarcheCard key={d.id} d={d} isOpen={openId === d.id} onToggle={() => setOpenId(openId === d.id ? null : d.id)} delay={k * 50} />
+            {filtered.map((d) => (
+              <DemarcheCard key={d.id} d={d} isOpen={openId === d.id} onToggle={() => setOpenId(openId === d.id ? null : d.id)} hasDetails={hasDetails(d)} />
             ))}
           </div>
         )}
@@ -563,12 +608,12 @@ function DemarchesPage() {
         {/* Parcours en 3 étapes */}
         <section className="mt-20">
           <div className="mb-8 text-center">
-            <div className="text-sm font-bold uppercase tracking-[0.25em] text-clay">Votre parcours</div>
+            <div className="text-sm font-bold uppercase tracking-[0.25em] text-clay">Parcours usager</div>
             <h2 className="mt-2 font-display text-3xl text-night md:text-4xl">Votre parcours en 3 étapes</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {PARCOURS.map((p, i) => (
-              <div key={i} className="reveal rounded-[1.75rem] border border-border bg-card p-8 text-center" style={{ transitionDelay: `${i * 100}ms` }}>
+              <div key={i} className="rounded-[1.75rem] border border-border bg-card p-8 text-center">
                 <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-saffron/20 text-saffron">
                   <p.icon className="h-7 w-7" strokeWidth={1.5} />
                 </div>
@@ -609,7 +654,7 @@ function DemarchesPage() {
           </div>
         </section>
 
-        {/* Help CTA */}
+        {/* Assistance */}
         <section className="mt-16 overflow-hidden rounded-[2rem] bg-night p-10 text-center text-cream md:p-14">
           <Users className="mx-auto h-10 w-10 text-saffron" strokeWidth={1.5} />
           <h2 className="mt-4 font-display text-2xl md:text-3xl">Besoin d'un accompagnement pour votre dossier ?</h2>
@@ -618,10 +663,13 @@ function DemarchesPage() {
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <span className="flex items-center gap-2 rounded-full bg-cream/10 px-5 py-3 text-sm font-semibold">
-              <Clock className="h-4 w-4 text-saffron" strokeWidth={1.5} /> Dimanche–Jeudi : 8h00–16h30
+              <Phone className="h-4 w-4 text-saffron" strokeWidth={1.5} /> 026 11 22 33
             </span>
             <span className="flex items-center gap-2 rounded-full bg-cream/10 px-5 py-3 text-sm font-semibold">
-              <MapPin className="h-4 w-4 text-saffron" strokeWidth={1.5} /> Hôtel de ville, Bd Abane Ramdane
+              <Clock className="h-4 w-4 text-saffron" strokeWidth={1.5} /> Dimanche à Jeudi · 08:30 à 16:30
+            </span>
+            <span className="flex items-center gap-2 rounded-full bg-cream/10 px-5 py-3 text-sm font-semibold">
+              <MapPin className="h-4 w-4 text-saffron" strokeWidth={1.5} /> Service de l'état civil — APC
             </span>
           </div>
         </section>
@@ -630,60 +678,69 @@ function DemarchesPage() {
   );
 }
 
-function DemarcheCard({ d, isOpen, onToggle, delay }: { d: Demarche; isOpen: boolean; onToggle: () => void; delay: number }) {
+function DemarcheCard({ d, isOpen, onToggle, hasDetails }: { d: Demarche; isOpen: boolean; onToggle: () => void; hasDetails: boolean }) {
   return (
-    <div className="rounded-[1.75rem] border border-border bg-card overflow-hidden transition" style={{ transitionDelay: `${delay}ms` }}>
-      <button
-        onClick={onToggle}
-        className="flex w-full items-center gap-5 p-6 text-start"
-      >
-        <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-olive/10 text-olive">
-          <FileText className="h-6 w-6" strokeWidth={1.25} />
+    <div id={`demarche-${d.id}`} className="rounded-[1.75rem] border border-border bg-card overflow-hidden transition">
+      <div className="p-6">
+        <div className="mb-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-clay">{CAT_LABELS[d.categorie]}</span>
         </div>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-clay">{CAT_LABELS[d.categorie]}</span>
-            {d.formulaire && (
-              <span className="rounded-full bg-saffron/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-saffron">Formulaire</span>
+        <h3 className="font-display text-xl text-night">{d.titre}</h3>
+        <p className="mt-1.5 text-sm text-muted-foreground">{d.description}</p>
+
+        {hasDetails && (d.delai || d.depot) && (
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+            {d.delai && (
+              <span className="flex items-center gap-1.5 text-muted-foreground">
+                <Clock className="h-3.5 w-3.5 text-clay" strokeWidth={1.5} /> Délai : <strong className="text-night">{d.delai}</strong>
+              </span>
+            )}
+            {d.depot && (
+              <span className="flex items-center gap-1.5 text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5 text-clay" strokeWidth={1.5} /> Dépôt : <strong className="text-night">{d.depot}</strong>
+              </span>
             )}
           </div>
-          <div className="mt-1 font-display text-xl text-night">{d.titre}</div>
-          <div className="mt-1 text-sm text-muted-foreground">{d.description}</div>
-        </div>
-        <ArrowRight className={`h-5 w-5 shrink-0 text-muted-foreground transition ${isOpen ? "rotate-90" : ""}`} />
-      </button>
-      {isOpen && (
-        <div className="border-t border-border px-6 py-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <div>
-              <h4 className="flex items-center gap-2 font-semibold text-night"><FileCheck className="h-4 w-4 text-olive" strokeWidth={1.5} /> Pièces à fournir</h4>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                {d.documents.map((doc) => (
-                  <li key={doc} className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron" /> {doc}
+        )}
+
+        {hasDetails && (
+          <div className="mt-4">
+            <h4 className="flex items-center gap-2 text-sm font-semibold text-night"><FileCheck className="h-4 w-4 text-olive" strokeWidth={1.5} /> Pièces à fournir</h4>
+            {isOpen ? (
+              <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                {d.pieces.map((piece) => (
+                  <li key={piece} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron" /> {piece}
                   </li>
                 ))}
               </ul>
-            </div>
-            <div>
-              <h4 className="flex items-center gap-2 font-semibold text-night"><ArrowRight className="h-4 w-4 text-olive" strokeWidth={1.5} /> Étapes</h4>
-              <ol className="mt-3 space-y-2 text-sm text-muted-foreground">
-                {d.etapes.map((etape, i) => (
-                  <li key={etape} className="flex items-start gap-3">
-                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-olive/10 text-xs font-bold text-olive">{i + 1}</span>
-                    {etape}
-                  </li>
-                ))}
-              </ol>
-            </div>
+            ) : (
+              <p className="mt-1 text-xs text-muted-foreground">{d.pieces.length} pièce(s) à fournir</p>
+            )}
           </div>
-          <div className="mt-6 grid gap-4 border-t border-border pt-4 sm:grid-cols-3">
-            <div className="flex items-center gap-2 text-sm text-night"><Clock className="h-4 w-4 text-clay" strokeWidth={1.5} /> Délai : <strong>{d.delai}</strong></div>
-            <div className="flex items-center gap-2 text-sm text-night"><Download className="h-4 w-4 text-clay" strokeWidth={1.5} /> Coût : <strong>{d.cout}</strong></div>
-            <div className="flex items-center gap-2 text-sm text-night"><MapPin className="h-4 w-4 text-clay" strokeWidth={1.5} /> {d.lieu}</div>
-          </div>
+        )}
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          {hasDetails && (
+            <button
+              onClick={onToggle}
+              className="flex items-center gap-1.5 text-sm font-bold text-olive hover:text-night"
+            >
+              {isOpen ? "Réduire" : "Voir la démarche"} <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+            </button>
+          )}
+          {d.hasPdf && (
+            <button className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-night transition hover:bg-saffron/10">
+              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> PDF {d.pdfLabel}
+            </button>
+          )}
+          {d.extraPdfLabel && (
+            <button className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-night transition hover:bg-saffron/10">
+              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> PDF {d.extraPdfLabel}
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
