@@ -632,7 +632,7 @@ function DemarchesPage() {
 
 function DemarcheCard({ d, isOpen, onToggle, delay }: { d: Demarche; isOpen: boolean; onToggle: () => void; delay: number }) {
   return (
-    <div className="reveal rounded-[1.75rem] border border-border bg-card overflow-hidden transition" style={{ transitionDelay: `${delay}ms` }}>
+    <div className="rounded-[1.75rem] border border-border bg-card overflow-hidden transition" style={{ transitionDelay: `${delay}ms` }}>
       <button
         onClick={onToggle}
         className="flex w-full items-center gap-5 p-6 text-start"
