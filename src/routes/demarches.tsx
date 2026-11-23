@@ -20,6 +20,8 @@ export const Route = createFileRoute("/demarches")({
 
 type Categorie = "etat_civil" | "identite" | "certificats" | "famille" | "urbanisme" | "divers";
 
+type PdfLink = { label: string; href: string };
+
 type Demarche = {
   id: string;
   titre: string;
@@ -28,9 +30,7 @@ type Demarche = {
   delai: string;
   depot: string;
   pieces: string[];
-  hasPdf?: boolean;
-  pdfLabel?: string;
-  extraPdfLabel?: string;
+  pdfs?: PdfLink[];
 };
 
 const CATEGORIES: { value: Categorie; label: string; icon: typeof FileText }[] = [
@@ -70,6 +70,7 @@ const DEMARCHES: Demarche[] = [
     delai: "immédiat à 24 h",
     depot: "État civil APC",
     pieces: ["Pièce d'identité du demandeur", "Nom, prénom, date et lieu de naissance", "Livret de famille (si disponible)"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Extrait_de_naissance_12S_.pdf" }],
   },
   {
     id: "acte-mariage",
@@ -79,8 +80,10 @@ const DEMARCHES: Demarche[] = [
     delai: "24 à 48 h",
     depot: "Commune du mariage",
     pieces: ["Pièce d'identité", "Noms des époux + date du mariage", "Livret de famille (si disponible)"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [
+      { label: "Démarche", href: "/documents/demarches/Acte_de_mariage_mariage_mixte_demarches.pdf" },
+      { label: "Télécharger le formulaire", href: "/documents/demarches/Acte_de_mariage_mariage_mixte_formulaire.pdf" },
+    ],
   },
   {
     id: "acte-deces",
@@ -90,6 +93,7 @@ const DEMARCHES: Demarche[] = [
     delai: "24 à 72 h",
     depot: "État civil APC",
     pieces: ["Pièce d'identité du demandeur", "Informations sur le défunt", "Certificat médical (déclaration)"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Acte_de_deces_.pdf" }],
   },
   {
     id: "fiche-familiale",
@@ -99,6 +103,7 @@ const DEMARCHES: Demarche[] = [
     delai: "24 h",
     depot: "État civil APC",
     pieces: ["Pièce d'identité du chef de famille", "Livret de famille", "Formulaire de demande signé"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Fiche_familiale_.pdf" }],
   },
   {
     id: "attestation-non-mariage",
@@ -108,6 +113,7 @@ const DEMARCHES: Demarche[] = [
     delai: "24 à 48 h",
     depot: "État civil APC",
     pieces: ["Pièce d'identité", "Extrait de naissance récent", "Formulaire de demande"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Attestation_de_non_mariage_.pdf" }],
   },
 
   // Identité
@@ -119,8 +125,10 @@ const DEMARCHES: Demarche[] = [
     delai: "variable selon Daïra",
     depot: "Daïra / centre biométrique",
     pieces: ["Acte de naissance 12S", "Certificat de résidence", "Photos biométriques + formulaire"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [
+      { label: "Démarche", href: "/documents/demarches/Carte_nationale_didentite_biometrique_demarche.pdf" },
+      { label: "Télécharger le formulaire", href: "/documents/demarches/Carte_nationale_didentite_biometrique_formulaire.pdf" },
+    ],
   },
   {
     id: "passeport",
@@ -130,8 +138,10 @@ const DEMARCHES: Demarche[] = [
     delai: "selon instruction",
     depot: "Daïra",
     pieces: ["Acte de naissance 12S", "Carte d'identité en cours de validité", "Certificat de résidence et photos"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [
+      { label: "Démarche", href: "/documents/demarches/Passeport_demarche.pdf" },
+      { label: "Télécharger le formulaire", href: "/documents/demarches/Passeport_formulaire.pdf" },
+    ],
   },
   {
     id: "permis-conduire",
@@ -141,8 +151,10 @@ const DEMARCHES: Demarche[] = [
     delai: "variable",
     depot: "service habilité",
     pieces: ["Pièce d'identité", "Justificatifs administratifs requis", "Formulaire de demande"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [
+      { label: "Démarche", href: "/documents/demarches/Permis_de_conduire_demarche.pdf" },
+      { label: "Télécharger le formulaire", href: "/documents/demarches/Permis_de_conduire_formulaire.pdf" },
+    ],
   },
   {
     id: "carte-electorale",
@@ -152,6 +164,7 @@ const DEMARCHES: Demarche[] = [
     delai: "selon calendrier électoral",
     depot: "guichet électoral APC",
     pieces: ["Pièce d'identité", "Justificatif de résidence", "Formulaire d'inscription"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Carte_electorale_.pdf" }],
   },
 
   // Certificats
@@ -163,6 +176,7 @@ const DEMARCHES: Demarche[] = [
     delai: "immédiat à 24 h",
     depot: "guichet APC",
     pieces: ["Pièce d'identité", "Justificatif de domicile", "Attestation d'hébergement si nécessaire"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Certificat_de_residence_.pdf" }],
   },
   {
     id: "certificat-individualite",
@@ -172,6 +186,7 @@ const DEMARCHES: Demarche[] = [
     delai: "24 à 48 h",
     depot: "guichet APC",
     pieces: ["Pièce d'identité", "Extraits d'état civil concernés", "Formulaire explicatif"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Certificat_dindividualite_.pdf" }],
   },
   {
     id: "procuration",
@@ -181,6 +196,7 @@ const DEMARCHES: Demarche[] = [
     delai: "immédiat",
     depot: "guichet APC",
     pieces: ["Pièces d'identité des parties", "Texte de procuration ou formulaire", "Présence du mandant"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Procuration_.pdf" }],
   },
 
   // Famille
@@ -192,6 +208,7 @@ const DEMARCHES: Demarche[] = [
     delai: "24 à 48 h",
     depot: "guichet APC",
     pieces: ["Pièce d'identité du parent/tuteur", "Livret de famille", "Pièce d'identité du mineur"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Sortie_de_mineurs_a_letranger_.pdf" }],
   },
   {
     id: "declaration-hebergement",
@@ -201,8 +218,7 @@ const DEMARCHES: Demarche[] = [
     delai: "immédiat à 24 h",
     depot: "guichet APC",
     pieces: ["Pièce d'identité de l'hébergeant", "Justificatif de domicile", "Copie d'identité de la personne hébergée"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Declaration_dhebergement_formulaire.pdf" }],
   },
 
   // Divers administratifs
@@ -214,6 +230,7 @@ const DEMARCHES: Demarche[] = [
     delai: "selon instruction",
     depot: "service concerné",
     pieces: ["Pièce d'identité", "Acte de naissance", "Pièces complémentaires selon cas"],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Service_national_.pdf" }],
   },
   {
     id: "immatriculation-vente-vehicule",
@@ -223,9 +240,10 @@ const DEMARCHES: Demarche[] = [
     delai: "variable",
     depot: "service habilité",
     pieces: ["Carte grise et pièces du véhicule", "Pièces d'identité des parties", "Actes de vente / formulaires"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
-    extraPdfLabel: "Déclaration de vente",
+    pdfs: [
+      { label: "Télécharger le formulaire", href: "/documents/demarches/Immatriculation_et_vente_de_vehicule_formulaire.pdf" },
+      { label: "Déclaration de vente", href: "/documents/demarches/Immatriculation_et_vente_de_vehicule-declaration_de_vente.pdf" },
+    ],
   },
   {
     id: "visa-prolongation",
@@ -235,9 +253,10 @@ const DEMARCHES: Demarche[] = [
     delai: "selon instruction",
     depot: "service compétent",
     pieces: ["Pièce d'identité et justificatifs de séjour", "Documents du dossier de voyage", "Formulaire de demande"],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
-    extraPdfLabel: "Prolongation de visa",
+    pdfs: [
+      { label: "Télécharger le formulaire", href: "/documents/demarches/Demande_de_visa_formilaire.pdf" },
+      { label: "Prolongation de visa", href: "/documents/demarches/prolongation_de_visa_formulaire.pdf" },
+    ],
   },
 
   // Formulaires spécialisés
@@ -249,6 +268,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Commercant_non_sedentaire_.pdf" }],
   },
   {
     id: "carte-commercant-etranger",
@@ -258,8 +278,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Carte_commercant_etranger_.pdf" }],
   },
   {
     id: "logement-rural",
@@ -269,6 +288,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Logement_rural_.pdf" }],
   },
   {
     id: "licence-reunion-publique",
@@ -278,8 +298,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Demander_une_licence_pour_organiser_une_reunion_publique_.pdf" }],
   },
   {
     id: "certificat-morcellement",
@@ -289,8 +308,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Demande_certificat_de_morcellement_.pdf" }],
   },
   {
     id: "permis-demolir",
@@ -300,8 +318,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Demande_permis_de_demolir_.pdf" }],
   },
   {
     id: "permis-lotir",
@@ -311,8 +328,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Demande_permis_de_lotir_.pdf" }],
   },
   {
     id: "etablissement-loisirs",
@@ -322,8 +338,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Exploitation_etablissement_de_loisirs_et_spectacles_.pdf" }],
   },
   {
     id: "autorisation-mariage-mixte",
@@ -333,8 +348,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Autorisation_de_mariage_mixte_.pdf" }],
   },
   {
     id: "passeport-urgence",
@@ -344,8 +358,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Passeport_durgence_.pdf" }],
   },
   {
     id: "formulaire-passeport-cni",
@@ -355,8 +368,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Formulaire_passeport_CNI_biometriques_.pdf" }],
   },
   {
     id: "cni-detenteurs-passeport",
@@ -366,8 +378,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/CNI_biometrique_(detenteurs_passeport)_.pdf" }],
   },
   {
     id: "certificat-medical-permis",
@@ -377,8 +388,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Certificat_medical_(permis_de_conduire)_.pdf" }],
   },
   {
     id: "declaration-vente-vehicule",
@@ -388,8 +398,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Declaration_de_vente_de_vehicule_.pdf" }],
   },
   {
     id: "prolongation-visa-sejour",
@@ -399,8 +408,7 @@ const DEMARCHES: Demarche[] = [
     delai: "",
     depot: "",
     pieces: [],
-    hasPdf: true,
-    pdfLabel: "Télécharger le formulaire",
+    pdfs: [{ label: "Télécharger le formulaire", href: "/documents/demarches/Prolongation_de_visa_:_sejour_.pdf" }],
   },
 ];
 
@@ -729,16 +737,18 @@ function DemarcheCard({ d, isOpen, onToggle, hasDetails }: { d: Demarche; isOpen
               {isOpen ? "Réduire" : "Voir la démarche"} <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
             </button>
           )}
-          {d.hasPdf && (
-            <button className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-night transition hover:bg-saffron/10">
-              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> PDF {d.pdfLabel}
-            </button>
-          )}
-          {d.extraPdfLabel && (
-            <button className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-night transition hover:bg-saffron/10">
-              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> PDF {d.extraPdfLabel}
-            </button>
-          )}
+          {d.pdfs?.map((pdf) => (
+            <a
+              key={pdf.href}
+              href={pdf.href}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-night transition hover:bg-saffron/10"
+            >
+              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> {pdf.label}
+            </a>
+          ))}
         </div>
       </div>
     </div>
