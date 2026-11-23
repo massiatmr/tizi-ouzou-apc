@@ -19,10 +19,10 @@ import sommet from "@/assets/tizi_village.jpg";
 import signalerIllu from "@/assets/signaler_illustration_cut.png";
 import djurdjura from "@/assets/tizi_djurdjura.jpg";
 import blason from "@/assets/blason.png";
-import pontNuit from "@/assets/pont_nuit.jpg.asset.json";
-import monumentSpirale from "@/assets/monument_spirale.jpg.asset.json";
-import stade from "@/assets/stade.jpg.asset.json";
-import statueNumide from "@/assets/statue_numide_nuit.jpg.asset.json";
+import tiziNuit from "@/assets/tizi_nuit.jpg";
+import tiziBoulevard from "@/assets/tizi_boulevard.jpg";
+import tiziBelloua from "@/assets/tizi_belloua.jpg";
+import tiziWilaya from "@/assets/tizi_wilaya.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -63,10 +63,10 @@ const T = {
 
 const slides = [
   { src: rue, label: "Au cœur de Tizi Ouzou" },
-  { src: monumentSpirale.url, label: "Le monument des Martyrs" },
-  { src: pontNuit.url, label: "Le pont, jardins allumés" },
-  { src: stade.url, label: "Le nouveau stade de Tizi" },
-  { src: statueNumide.url, label: "La statue numide, à la nuit tombée" },
+  { src: tiziNuit, label: "Tizi Ouzou à la nuit tombée" },
+  { src: tiziBoulevard, label: "Le boulevard central" },
+  { src: tiziBelloua, label: "Le quartier Belloua" },
+  { src: tiziWilaya, label: "La wilaya de Tizi Ouzou" },
 ];
 
 /** Genêt flower — the site's signature mark */
@@ -412,7 +412,7 @@ function Index() {
               <p className="mt-3 text-sm">{tr("Hôtel de ville, Boulevard Abane Ramdane")}<br />{tr("15000 Tizi Ouzou, Algérie")}</p></div>
           </div>
           <div className="reveal overflow-hidden rounded-[2rem] border border-border lg:col-span-2">
-            <iframe title={tr("Carte de Tizi Ouzou")} className="h-full min-h-[380px] w-full grayscale-[40%]" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=4.03%2C36.70%2C4.09%2C36.73&layer=mapnik&marker=36.7169%2C4.0497" />
+            <iframe title={tr("Carte de Tizi Ouzou")} className="h-full min-h-[380px] w-full grayscale-[40%]" loading="lazy" src="https://www.google.com/maps?q=36.7169,4.0497&z=14&output=embed" />
           </div>
         </div>
       </section>

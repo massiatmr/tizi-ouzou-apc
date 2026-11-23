@@ -275,7 +275,7 @@ function SignalerPage() {
                     title="Carte interactive"
                     className="h-64 w-full"
                     loading="lazy"
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=4.03%2C36.70%2C4.09%2C36.73&layer=mapnik&marker=36.7169%2C4.0497"
+                    src="https://www.google.com/maps?q=36.7169,4.0497&z=14&output=embed"
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">Vous pouvez également déplacer le marqueur sur la carte pour affiner la localisation.</p>

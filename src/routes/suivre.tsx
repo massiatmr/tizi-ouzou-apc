@@ -129,7 +129,7 @@ function SuivrePage() {
                     title="Localisation"
                     className="h-48 w-full"
                     loading="lazy"
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${result.longitude - 0.01}%2C${result.latitude - 0.01}%2C${result.longitude + 0.01}%2C${result.latitude + 0.01}&layer=mapnik&marker=${result.latitude}%2C${result.longitude}`}
+                    src={`https://www.google.com/maps?q=${result.latitude},${result.longitude}&z=16&output=embed`}
                   />
                 </div>
               )}
